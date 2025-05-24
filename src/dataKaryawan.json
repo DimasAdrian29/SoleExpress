@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "nama": "Dewi Lestari",
+    "jabatan": "Manajer Operasional",
+    "foto": "https://randomuser.me/api/portraits/women/44.jpg"
+  },
+  {
+    "id": 2,
+    "nama": "Andi Pratama",
+    "jabatan": "Pengembang Frontend",
+    "foto": "https://randomuser.me/api/portraits/men/32.jpg"
+  },
+  {
+    "id": 3,
+    "nama": "Rina Wijaya",
+    "jabatan": "Pengembang Backend",
+    "foto": "https://randomuser.me/api/portraits/women/45.jpg"
+  },
+  {
+    "id": 4,
+    "nama": "Budi Santoso",
+    "jabatan": "QA Engineer",
+    "foto": "https://randomuser.me/api/portraits/men/33.jpg"
+  },
+  {
+    "id": 5,
+    "nama": "Siti Rahayu",
+    "jabatan": "Desainer UI/UX",
+    "foto": "https://randomuser.me/api/portraits/women/46.jpg"
+  },
+  {
+    "id": 6,
+    "nama": "Agus Setiawan",
+    "jabatan": "Analisis Data",
+    "foto": "https://randomuser.me/api/portraits/men/34.jpg"
+  },
+  {
+    "id": 7,
+    "nama": "Anita Permata",
+    "jabatan": "Manajer Pemasaran",
+    "foto": "https://randomuser.me/api/portraits/women/47.jpg"
+  },
+  {
+    "id": 8,
+    "nama": "Joko Susilo",
+    "jabatan": "Spesialis SEO",
+    "foto": "https://randomuser.me/api/portraits/men/35.jpg"
+  },
+  {
+    "id": 9,
+    "nama": "Maya Indah",
+    "jabatan": "HRD",
+    "foto": "https://randomuser.me/api/portraits/women/48.jpg"
+  },
+  {
+    "id": 10,
+    "nama": "Eko Prasetyo",
+    "jabatan": "Koordinator Logistik",
+    "foto": "https://randomuser.me/api/portraits/men/36.jpg"
+  },
+  {
+    "id": 11,
+    "nama": "Linda Sari",
+    "jabatan": "Akuntan Senior",
+    "foto": "https://randomuser.me/api/portraits/women/49.jpg"
+  },
+  {
+    "id": 12,
+    "nama": "Bambang Wijaya",
+    "jabatan": "Teknisi IT",
+    "foto": "https://randomuser.me/api/portraits/men/37.jpg"
+  },
+  {
+    "id": 13,
+    "nama": "Rini Astuti",
+    "jabatan": "Manajer Proyek",
+    "foto": "https://randomuser.me/api/portraits/women/50.jpg"
+  },
+  {
+    "id": 14,
+    "nama": "Ahmad Fauzi",
+    "jabatan": "Pengembang Fullstack",
+    "foto": "https://randomuser.me/api/portraits/men/38.jpg"
+  },
+  {
+    "id": 15,
+    "nama": "Diah Anggraeni",
+    "jabatan": "Kepala Cabang",
+    "foto": "https://randomuser.me/api/portraits/women/51.jpg"
+  },
+  {
+    "id": 16,
+    "nama": "Hendra Gunawan",
+    "jabatan": "Spesialis Keamanan Siber",
+    "foto": "https://randomuser.me/api/portraits/men/39.jpg"
+  },
+  {
+    "id": 17,
+    "nama": "Fitriani",
+    "jabatan": "Pelatihan dan Pengembangan",
+    "foto": "https://randomuser.me/api/portraits/women/52.jpg"
+  },
+  {
+    "id": 18,
+    "nama": "Rudi Hartono",
+    "jabatan": "Manajer Produk",
+    "foto": "https://randomuser.me/api/portraits/men/40.jpg"
+  },
+  {
+    "id": 19,
+    "nama": "Nurul Hasanah",
+    "jabatan": "Customer Service",
+    "foto": "https://randomuser.me/api/portraits/women/53.jpg"
+  },
+  {
+    "id": 20,
+    "nama": "Fajar Ramadan",
+    "jabatan": "Administrator Sistem",
+    "foto": "https://randomuser.me/api/portraits/men/41.jpg"
+  }
+]

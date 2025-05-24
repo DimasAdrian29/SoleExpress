@@ -1,0 +1,212 @@
+[
+  {
+    "id": 1,
+    "name": "Nike",
+    "year_established": 1964,
+    "headquarters_location": "Beaverton, Oregon, USA",
+    "product_categories": ["Sneakers", "Running Shoes"],
+    "popular_products": ["Nike Air Force 1", "Nike React Infinity Run"],
+    "website": "https://www.nike.com",
+    "contact_info": {
+      "email": "support@nike.com",
+      "phone": "+1-800-344-6453"
+    },
+    "description": "Pioneer in athletic footwear dengan teknologi inovatif seperti Air cushioning."
+  },
+  {
+    "id": 2,
+    "name": "Adidas",
+    "year_established": 1949,
+    "headquarters_location": "Herzogenaurach, Germany",
+    "product_categories": ["Running Shoes", "Lifestyle"],
+    "popular_products": ["Adidas Ultraboost 22", "Adidas NMD R1"],
+    "website": "https://www.adidas.com",
+    "contact_info": {
+      "email": "customerservice@adidas.com",
+      "phone": "+49-9132-84-0"
+    },
+    "description": "Brand global dengan teknologi Boost untuk kenyamanan maksimal."
+  },
+  {
+    "id": 3,
+    "name": "Puma",
+    "year_established": 1948,
+    "headquarters_location": "Herzogenaurach, Germany",
+    "product_categories": ["Lifestyle", "Running Shoes"],
+    "popular_products": ["Puma RS-X", "Puma Deviate Nitro"],
+    "website": "https://www.puma.com",
+    "contact_info": {
+      "email": "service@puma.com",
+      "phone": "+49-9132-81-0"
+    },
+    "description": "Menggabungkan gaya streetwear dengan performa atletik."
+  },
+  {
+    "id": 4,
+    "name": "New Balance",
+    "year_established": 1906,
+    "headquarters_location": "Boston, Massachusetts, USA",
+    "product_categories": ["Retro Sneakers", "Running Shoes"],
+    "popular_products": ["New Balance 550", "New Balance Fresh Foam 1080v11"],
+    "website": "https://www.newbalance.com",
+    "contact_info": {
+      "email": "customerservice@newbalance.com",
+      "phone": "+1-800-253-7463"
+    },
+    "description": "Dikenal dengan desain klasik dan teknologi Fresh Foam."
+  },
+  {
+    "id": 5,
+    "name": "Converse",
+    "year_established": 1908,
+    "headquarters_location": "Boston, Massachusetts, USA",
+    "product_categories": ["Canvas Sneakers"],
+    "popular_products": ["Converse Chuck Taylor 70"],
+    "website": "https://www.converse.com",
+    "contact_info": {
+      "email": "help@converse.com",
+      "phone": "+1-800-428-2667"
+    },
+    "description": "Ikon budaya pop dengan desain Chuck Taylor yang timeless."
+  },
+  {
+    "id": 6,
+    "name": "Vans",
+    "year_established": 1966,
+    "headquarters_location": "Costa Mesa, California, USA",
+    "product_categories": ["Skate Shoes"],
+    "popular_products": ["Vans Old Skool"],
+    "website": "https://www.vans.com",
+    "contact_info": {
+      "email": "customerservice@vans.com",
+      "phone": "+1-800-832-4849"
+    },
+    "description": "Brand skateboard legendaris dengan style Sidestripe ikonik."
+  },
+  {
+    "id": 7,
+    "name": "Asics",
+    "year_established": 1949,
+    "headquarters_location": "Kobe, Japan",
+    "product_categories": ["Running Shoes"],
+    "popular_products": ["Asics Gel-Kayano 28"],
+    "website": "https://www.asics.com",
+    "contact_info": {
+      "email": "customer-care@asics.com",
+      "phone": "+81-78-303-5600"
+    },
+    "description": "Spesialis sepatu lari dengan teknologi Gel cushioning."
+  },
+  {
+    "id": 8,
+    "name": "Brooks",
+    "year_established": 1914,
+    "headquarters_location": "Seattle, Washington, USA",
+    "product_categories": ["Running Shoes"],
+    "popular_products": ["Brooks Ghost 14"],
+    "website": "https://www.brooksrunning.com",
+    "contact_info": {
+      "email": "info@brooksrunning.com",
+      "phone": "+1-800-227-6657"
+    },
+    "description": "Fokus pada kenyamanan berlari dengan teknologi DNA LOFT."
+  },
+  {
+    "id": 9,
+    "name": "Hoka One One",
+    "year_established": 2009,
+    "headquarters_location": "Goleta, California, USA",
+    "product_categories": ["Running Shoes"],
+    "popular_products": ["Hoka One One Bondi 7", "Hoka One One Clifton 8"],
+    "website": "https://www.hoka.com",
+    "contact_info": {
+      "email": "customerservice@hoka.com",
+      "phone": "+1-855-465-2252"
+    },
+    "description": "Inovator midsole tebal untuk cushioning maksimal."
+  },
+  {
+    "id": 10,
+    "name": "Reebok",
+    "year_established": 1958,
+    "headquarters_location": "Boston, Massachusetts, USA",
+    "product_categories": ["Lifestyle"],
+    "popular_products": ["Reebok Classic Leather"],
+    "website": "https://www.reebok.com",
+    "contact_info": {
+      "email": "customer.service@reebok.com",
+      "phone": "+1-866-221-1205"
+    },
+    "description": "Kombinasi gaya vintage dan performa modern."
+  },
+  {
+    "id": 11,
+    "name": "Under Armour",
+    "year_established": 1996,
+    "headquarters_location": "Baltimore, Maryland, USA",
+    "product_categories": ["Running Shoes"],
+    "popular_products": ["Under Armour HOVR Phantom 2"],
+    "website": "https://www.underarmour.com",
+    "contact_info": {
+      "email": "customerservice@underarmour.com",
+      "phone": "+1-888-727-6687"
+    },
+    "description": "Teknologi HOVR untuk responsivitas optimal saat berlari."
+  },
+  {
+    "id": 12,
+    "name": "On",
+    "year_established": 2010,
+    "headquarters_location": "Zürich, Switzerland",
+    "product_categories": ["Running Shoes"],
+    "popular_products": ["On Cloudstratus"],
+    "website": "https://www.on-running.com",
+    "contact_info": {
+      "email": "service@on-running.com",
+      "phone": "+41-44-578-78-78"
+    },
+    "description": "Desain CloudTec untuk pengalaman berlari seperti di awan."
+  },
+  {
+    "id": 13,
+    "name": "Salomon",
+    "year_established": 1947,
+    "headquarters_location": "Annecy, France",
+    "product_categories": ["Trail Running Shoes"],
+    "popular_products": ["Salomon Speedcross 5"],
+    "website": "https://www.salomon.com",
+    "contact_info": {
+      "email": "consumer-care@salomon.com",
+      "phone": "+33-4-50-33-47-47"
+    },
+    "description": "Spesialis sepatu trail dengan grip Contagrip terbaik."
+  },
+  {
+    "id": 14,
+    "name": "Saucony",
+    "year_established": 1898,
+    "headquarters_location": "Lexington, Massachusetts, USA",
+    "product_categories": ["Running Shoes"],
+    "popular_products": ["Saucony Endorphin Speed"],
+    "website": "https://www.saucony.com",
+    "contact_info": {
+      "email": "service@saucony.com",
+      "phone": "+1-800-365-4933"
+    },
+    "description": "Inovator teknologi PWRRUN untuk performa lari optimal."
+  },
+  {
+    "id": 15,
+    "name": "Mizuno",
+    "year_established": 1906,
+    "headquarters_location": "Osaka, Japan",
+    "product_categories": ["Running Shoes"],
+    "popular_products": ["Mizuno Wave Rider 25"],
+    "website": "https://www.mizuno.com",
+    "contact_info": {
+      "email": "info@mizunousa.com",
+      "phone": "+1-800-966-1211"
+    },
+    "description": "Teknologi Wave Plate untuk stabilitas dan kenyamanan."
+  }
+]

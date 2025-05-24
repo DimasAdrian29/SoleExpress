@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+/* Font Custom */
+@font-face {
+  font-family: 'Barlow';
+  src: url('/fonts/Barlow-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/Poppins-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Poppins-ExtraBold';
+  src: url('/fonts/Poppins-ExtraBold.ttf');
+}
+
+/* Custom Theme Variables */
+:root {
+  --font-barlow: "Barlow", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
+  --font-poppins-extrabold: "Poppins-ExtraBold", sans-serif;
+
+  --color-latar: #f3f4f6;
+  --color-teks: #374151;
+  --color-teks-samping: #6b7280;
+  --color-garis: #e5e7eb;
+  --color-hijau: #00B074;
+  --color-merah: #ef4444;
+  --color-biru: #3b82f6;
+  --color-kuning: #f59e0b;
+}
+
+/* Base Styles */
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Sidebar Scrollbar Hidden */
+#sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+#sidebar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom Utility Classes (sebaiknya pakai @apply jika di Tailwind config) */
+.bg-\[\#f8f9fa\] {
+  background-color: #f8f9fa;
+}
+
+.bg-\[\#5f73f2\] {
+  background-color: #5f73f2;
+}
+
+.bg-\[\#3c50e0\] {
+  background-color: #3c50e0;
+}
+
+.text-\[\#0f0f0f\] {
+  color: #0f0f0f;
+}
+
+.text-\[\#3c50e0\] {
+  color: #3c50e0;
+}
+
+.text-\[\#f44336\] {
+  color: #f44336;
+}
+
+.text-\[\#3cd68a\] {
+  color: #3cd68a;
+}
+
+.text-\[\#a1a1a1\] {
+  color: #a1a1a1;
+}
+
+.text-\[\#f7f7f7\] {
+  color: #f7f7f7;
+}
