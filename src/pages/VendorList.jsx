@@ -1,4 +1,4 @@
-import vendorsData from "../dataVendor.json";
+import vendorsData from "../DataVendor.json";
 import { useState } from "react";
 import Header from "../components/Header";
 
