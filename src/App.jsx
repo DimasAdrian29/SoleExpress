@@ -5,6 +5,10 @@ import "./assets/tailwind.css";
 import { Route, Routes } from 'react-router-dom';
 import Loading from "./components/Loading";
 import '@fortawesome/fontawesome-free/css/all.css';
+import ProductDetail from "./pages/ProductDetail";
+import VendorDetail from "./pages/VendorDetail";
+import DetailKaryawan from "./pages/DetailKaryawan";
+import GaleriDetail from "./pages/GaleriDetail";
 
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const ErrorPage = React.lazy(() => import("./pages/ErrorPage"));
@@ -30,6 +34,10 @@ function App() {
           <Route path="/vendorlist" element={<VendorList />} />
           <Route path="/Karyawanlist" element={<TeamManagement />} />
           <Route path="/galerilist" element={<GaleriManagement />} />
+        <Route path="/produklist/:id" element={<ProductDetail />} />
+         <Route path="/vendorlist/:id" element={<VendorDetail />} />
+          <Route path="/Karyawanlist/:id" element={<DetailKaryawan />} />
+          <Route path="/galerilist/:id" element={<GaleriDetail />} />
         </Route>
 
         <Route element={<AuthLayout />}>

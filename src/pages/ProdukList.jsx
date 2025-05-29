@@ -1,5 +1,6 @@
-import productsData from "../dataSepatu.json";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import productsData from "../dataSepatu.json";
 import Header from "../components/Header";
 
 export default function ProductList() {
@@ -41,7 +42,9 @@ export default function ProductList() {
     <div className="flex min-h-screen bg-[#5f73f2]">
       <main className="flex-1 flex flex-col p-4 md:p-6 lg:p-8">
         <Header path="/ Pages / Produk" title="Produk" />
-        <h1 className="text-3xl font-bold text-white mb-8">Admin - Product Management</h1>
+        <h1 className="text-3xl font-bold text-white mb-8">
+          Admin - Product Management
+        </h1>
 
         {/* Filter Section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
@@ -109,12 +112,21 @@ export default function ProductList() {
                       className="w-16 h-16 object-cover rounded-md"
                     />
                   </td>
-                  <td className="px-4 py-2">{item.name}</td>
+                  <td className="px-4 py-2">
+                    <Link
+                      to={`/produklist/${item.id}`}
+                      className="text-blue-500 hover:underline"
+                    >
+                      {item.name}
+                    </Link>
+                  </td>
                   <td className="px-4 py-2">{item.brand}</td>
                   <td className="px-4 py-2">{item.category}</td>
                   <td className="px-4 py-2 font-bold">${item.price}</td>
                   <td className="px-4 py-2 text-red-600">{item.discount}%</td>
-                  <td className="px-4 py-2 text-yellow-600">{item.rating} ★</td>
+                  <td className="px-4 py-2 text-yellow-600">
+                    {item.rating} ★
+                  </td>
                   <td className="px-4 py-2">{item.stock}</td>
                   <td className="px-4 py-2">
                     <div className="flex flex-wrap gap-1">

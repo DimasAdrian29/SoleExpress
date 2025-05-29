@@ -3,120 +3,740 @@
     "id": 1,
     "nama": "Dewi Lestari",
     "jabatan": "Manajer Operasional",
-    "foto": "https://randomuser.me/api/portraits/women/44.jpg"
+    "foto": "https://randomuser.me/api/portraits/women/44.jpg",
+    "email": "dewi.lestari@perusahaan.com",
+    "telepon": "081234567801",
+    "tanggal_lahir": "1985-05-15",
+    "alamat": "Jl. Sudirman No. 45, Jakarta",
+    "deskripsi": "Manajer operasional berpengalaman dengan 8 tahun di bidang logistik dan manajemen rantai pasok.",
+    "tanggal_bergabung": "2017-06-10",
+    "status": "Aktif",
+    "keahlian": ["Leadership", "Supply Chain", "Logistics"],
+    "pendidikan": [
+      {
+        "jenjang": "S1",
+        "jurusan": "Manajemen Bisnis",
+        "institusi": "Universitas Indonesia",
+        "tahun": "2003-2007"
+      }
+    ],
+    "pengalaman": [
+      {
+        "posisi": "Supervisor Operasional",
+        "perusahaan": "PT Logistik Nusantara",
+        "durasi": "2010-2017",
+        "deskripsi": "Mengelola tim operasional dan optimasi rantai pasok"
+      }
+    ],
+    "prestasi": [
+      {
+        "nama": "Best Operational Excellence",
+        "tahun": "2020",
+        "deskripsi": "Penghargaan untuk inovasi manajemen gudang"
+      }
+    ]
   },
   {
     "id": 2,
     "nama": "Andi Pratama",
     "jabatan": "Pengembang Frontend",
-    "foto": "https://randomuser.me/api/portraits/men/32.jpg"
+    "foto": "https://randomuser.me/api/portraits/men/32.jpg",
+    "email": "andi.pratama@perusahaan.com",
+    "telepon": "081234567802",
+    "tanggal_lahir": "1992-11-22",
+    "alamat": "Jl. Thamrin No. 12, Jakarta",
+    "deskripsi": "Frontend developer spesialis React.js dengan 5 tahun pengalaman membangun aplikasi web modern.",
+    "tanggal_bergabung": "2019-02-15",
+    "status": "Aktif",
+    "keahlian": ["React", "JavaScript", "CSS"],
+    "pendidikan": [
+      {
+        "jenjang": "S1",
+        "jurusan": "Teknik Informatika",
+        "institusi": "Institut Teknologi Bandung",
+        "tahun": "2011-2015"
+      }
+    ],
+    "pengalaman": [
+      {
+        "posisi": "Junior Frontend Developer",
+        "perusahaan": "PT Tech Inovasi",
+        "durasi": "2015-2019",
+        "deskripsi": "Pengembangan antarmuka pengguna untuk aplikasi e-commerce"
+      }
+    ],
+    "prestasi": [
+      {
+        "nama": "Code Quality Champion",
+        "tahun": "2021",
+        "deskripsi": "Penghargaan untuk implementasi terbaik best practices"
+      }
+    ]
   },
   {
     "id": 3,
     "nama": "Rina Wijaya",
     "jabatan": "Pengembang Backend",
-    "foto": "https://randomuser.me/api/portraits/women/45.jpg"
+    "foto": "https://randomuser.me/api/portraits/women/45.jpg",
+    "email": "rina.wijaya@perusahaan.com",
+    "telepon": "081234567803",
+    "tanggal_lahir": "1990-03-18",
+    "alamat": "Jl. Gatot Subroto No. 88, Jakarta",
+    "deskripsi": "Backend developer dengan keahlian Node.js dan sistem terdistribusi.",
+    "tanggal_bergabung": "2018-09-05",
+    "status": "Aktif",
+    "keahlian": ["Node.js", "API Design", "Database"],
+    "pendidikan": [
+      {
+        "jenjang": "S1",
+        "jurusan": "Ilmu Komputer",
+        "institusi": "Universitas Gadjah Mada",
+        "tahun": "2008-2012"
+      }
+    ],
+    "pengalaman": [
+      {
+        "posisi": "Backend Engineer",
+        "perusahaan": "PT Data Sistem",
+        "durasi": "2013-2018",
+        "deskripsi": "Membangun sistem backend untuk aplikasi finansial"
+      }
+    ],
+    "prestasi": [
+      {
+        "nama": "System Architecture Award",
+        "tahun": "2022",
+        "deskripsi": "Penghargaan untuk desain sistem terbaik"
+      }
+    ]
   },
   {
     "id": 4,
     "nama": "Budi Santoso",
     "jabatan": "QA Engineer",
-    "foto": "https://randomuser.me/api/portraits/men/33.jpg"
+    "foto": "https://randomuser.me/api/portraits/men/33.jpg",
+    "email": "budi.santoso@perusahaan.com",
+    "telepon": "081234567804",
+    "tanggal_lahir": "1988-07-30",
+    "alamat": "Jl. Kebon Sirih No. 5, Jakarta",
+    "deskripsi": "QA engineer dengan sertifikasi ISTQB dan pengalaman 7 tahun di bidang testing automation.",
+    "tanggal_bergabung": "2019-11-20",
+    "status": "Aktif",
+    "keahlian": ["Automation", "Selenium", "Testing"],
+    "pendidikan": [
+      {
+        "jenjang": "D3",
+        "jurusan": "Teknik Komputer",
+        "institusi": "Politeknik Negeri Jakarta",
+        "tahun": "2006-2009"
+      }
+    ],
+    "pengalaman": [
+      {
+        "posisi": "QA Tester",
+        "perusahaan": "PT Software Indonesia",
+        "durasi": "2010-2019",
+        "deskripsi": "Melakukan manual dan automation testing untuk produk software"
+      }
+    ],
+    "prestasi": [
+      {
+        "nama": "Quality Guardian",
+        "tahun": "2020",
+        "deskripsi": "Penghargaan untuk peningkatan kualitas produk"
+      }
+    ]
   },
   {
     "id": 5,
     "nama": "Siti Rahayu",
     "jabatan": "Desainer UI/UX",
-    "foto": "https://randomuser.me/api/portraits/women/46.jpg"
+    "foto": "https://randomuser.me/api/portraits/women/46.jpg",
+    "email": "siti.rahayu@perusahaan.com",
+    "telepon": "081234567805",
+    "tanggal_lahir": "1993-02-14",
+    "alamat": "Jl. Asia Afrika No. 77, Bandung",
+    "deskripsi": "UI/UX designer dengan fokus pada user-centered design dan design system.",
+    "tanggal_bergabung": "2020-03-01",
+    "status": "Aktif",
+    "keahlian": ["Figma", "User Research", "Prototyping"],
+    "pendidikan": [
+      {
+        "jenjang": "S1",
+        "jurusan": "Desain Komunikasi Visual",
+        "institusi": "Institut Seni Indonesia",
+        "tahun": "2011-2015"
+      }
+    ],
+    "pengalaman": [
+      {
+        "posisi": "Graphic Designer",
+        "perusahaan": "Studio Kreatif Nusantara",
+        "durasi": "2015-2020",
+        "deskripsi": "Mendesain antarmuka pengguna untuk aplikasi mobile"
+      }
+    ],
+    "prestasi": [
+      {
+        "nama": "Best Design System",
+        "tahun": "2021",
+        "deskripsi": "Penghargaan untuk sistem desain terintegrasi"
+      }
+    ]
   },
   {
     "id": 6,
     "nama": "Agus Setiawan",
     "jabatan": "Analisis Data",
-    "foto": "https://randomuser.me/api/portraits/men/34.jpg"
+    "foto": "https://randomuser.me/api/portraits/men/34.jpg",
+    "email": "agus.setiawan@perusahaan.com",
+    "telepon": "081234567806",
+    "tanggal_lahir": "1987-09-25",
+    "alamat": "Jl. Pahlawan No. 33, Surabaya",
+    "deskripsi": "Data analyst dengan keahlian dalam visualisasi data dan machine learning dasar.",
+    "tanggal_bergabung": "2018-07-12",
+    "status": "Aktif",
+    "keahlian": ["Python", "Data Visualization", "SQL"],
+    "pendidikan": [
+      {
+        "jenjang": "S2",
+        "jurusan": "Statistika",
+        "institusi": "Institut Pertanian Bogor",
+        "tahun": "2010-2012"
+      }
+    ],
+    "pengalaman": [
+      {
+        "posisi": "Business Intelligence",
+        "perusahaan": "PT Data Insights",
+        "durasi": "2013-2018",
+        "deskripsi": "Membangun dashboard dan laporan analisis bisnis"
+      }
+    ],
+    "prestasi": [
+      {
+        "nama": "Data Innovation Award",
+        "tahun": "2019",
+        "deskripsi": "Penghargaan untuk model prediktif terbaik"
+      }
+    ]
   },
   {
     "id": 7,
     "nama": "Anita Permata",
     "jabatan": "Manajer Pemasaran",
-    "foto": "https://randomuser.me/api/portraits/women/47.jpg"
+    "foto": "https://randomuser.me/api/portraits/women/47.jpg",
+    "email": "anita.permata@perusahaan.com",
+    "telepon": "081234567807",
+    "tanggal_lahir": "1984-12-05",
+    "alamat": "Jl. Melawai No. 11, Jakarta",
+    "deskripsi": "Manajer pemasaran dengan 10+ tahun pengalaman di bidang digital marketing dan brand management.",
+    "tanggal_bergabung": "2016-04-22",
+    "status": "Aktif",
+    "keahlian": ["Digital Marketing", "Branding", "SEO"],
+    "pendidikan": [
+      {
+        "jenjang": "S1",
+        "jurusan": "Manajemen Pemasaran",
+        "institusi": "Universitas Padjadjaran",
+        "tahun": "2002-2006"
+      }
+    ],
+    "pengalaman": [
+      {
+        "posisi": "Marketing Lead",
+        "perusahaan": "PT Global Brand",
+        "durasi": "2008-2016",
+        "deskripsi": "Mengembangkan strategi pemasaran untuk produk konsumen"
+      }
+    ],
+    "prestasi": [
+      {
+        "nama": "Marketing Excellence",
+        "tahun": "2018",
+        "deskripsi": "Penghargaan untuk kampanye pemasaran terbaik"
+      }
+    ]
   },
   {
     "id": 8,
     "nama": "Joko Susilo",
     "jabatan": "Spesialis SEO",
-    "foto": "https://randomuser.me/api/portraits/men/35.jpg"
+    "foto": "https://randomuser.me/api/portraits/men/35.jpg",
+    "email": "joko.susilo@perusahaan.com",
+    "telepon": "081234567808",
+    "tanggal_lahir": "1989-04-17",
+    "alamat": "Jl. Diponegoro No. 22, Semarang",
+    "deskripsi": "Spesialis SEO dengan sertifikasi Google dan pengalaman meningkatkan traffic organik.",
+    "tanggal_bergabung": "2019-08-14",
+    "status": "Aktif",
+    "keahlian": ["SEO", "Content Strategy", "Analytics"],
+    "pendidikan": [
+      {
+        "jenjang": "S1",
+        "jurusan": "Ilmu Komunikasi",
+        "institusi": "Universitas Diponegoro",
+        "tahun": "2007-2011"
+      }
+    ],
+    "pengalaman": [
+      {
+        "posisi": "Digital Marketing Specialist",
+        "perusahaan": "PT Media Online",
+        "durasi": "2012-2019",
+        "deskripsi": "Optimasi konten dan strategi pencarian organik"
+      }
+    ],
+    "prestasi": [
+      {
+        "nama": "Traffic Growth Award",
+        "tahun": "2020",
+        "deskripsi": "Meningkatkan traffic organik sebesar 300%"
+      }
+    ]
   },
   {
     "id": 9,
     "nama": "Maya Indah",
     "jabatan": "HRD",
-    "foto": "https://randomuser.me/api/portraits/women/48.jpg"
+    "foto": "https://randomuser.me/api/portraits/women/48.jpg",
+    "email": "maya.indah@perusahaan.com",
+    "telepon": "081234567809",
+    "tanggal_lahir": "1986-08-19",
+    "alamat": "Jl. Surya Sumantri No. 15, Bandung",
+    "deskripsi": "HRD dengan fokus pada talent acquisition dan pengembangan organisasi.",
+    "tanggal_bergabung": "2017-11-30",
+    "status": "Aktif",
+    "keahlian": ["Recruitment", "Training", "Compensation"],
+    "pendidikan": [
+      {
+        "jenjang": "S1",
+        "jurusan": "Psikologi",
+        "institusi": "Universitas Katolik Atma Jaya",
+        "tahun": "2004-2008"
+      }
+    ],
+    "pengalaman": [
+      {
+        "posisi": "HR Officer",
+        "perusahaan": "PT Sumber Daya Manusia",
+        "durasi": "2009-2017",
+        "deskripsi": "Manajemen rekrutmen dan pengembangan karir"
+      }
+    ],
+    "prestasi": [
+      {
+        "nama": "Best HR Initiative",
+        "tahun": "2019",
+        "deskripsi": "Penghargaan untuk program pengembangan karyawan"
+      }
+    ]
   },
   {
     "id": 10,
     "nama": "Eko Prasetyo",
     "jabatan": "Koordinator Logistik",
-    "foto": "https://randomuser.me/api/portraits/men/36.jpg"
+    "foto": "https://randomuser.me/api/portraits/men/36.jpg",
+    "email": "eko.prasetyo@perusahaan.com",
+    "telepon": "081234567810",
+    "tanggal_lahir": "1983-01-23",
+    "alamat": "Jl. Yos Sudarso No. 9, Medan",
+    "deskripsi": "Koordinator logistik dengan keahlian dalam manajemen gudang dan distribusi.",
+    "tanggal_bergabung": "2018-05-18",
+    "status": "Aktif",
+    "keahlian": ["Warehousing", "Distribution", "Inventory"],
+    "pendidikan": [
+      {
+        "jenjang": "D3",
+        "jurusan": "Manajemen Logistik",
+        "institusi": "Politeknik Negeri Medan",
+        "tahun": "2001-2004"
+      }
+    ],
+    "pengalaman": [
+      {
+        "posisi": "Logistik Supervisor",
+        "perusahaan": "PT Distribusi Nusantara",
+        "durasi": "2005-2018",
+        "deskripsi": "Mengkoordinasi operasional gudang dan distribusi"
+      }
+    ],
+    "prestasi": [
+      {
+        "nama": "Operational Efficiency",
+        "tahun": "2021",
+        "deskripsi": "Penghargaan untuk peningkatan efisiensi logistik"
+      }
+    ]
   },
   {
     "id": 11,
     "nama": "Linda Sari",
     "jabatan": "Akuntan Senior",
-    "foto": "https://randomuser.me/api/portraits/women/49.jpg"
+    "foto": "https://randomuser.me/api/portraits/women/49.jpg",
+    "email": "linda.sari@perusahaan.com",
+    "telepon": "081234567811",
+    "tanggal_lahir": "1982-06-12",
+    "alamat": "Jl. Teuku Umar No. 44, Denpasar",
+    "deskripsi": "Akuntan senior dengan sertifikasi CPA dan 15 tahun pengalaman di bidang akuntansi korporat.",
+    "tanggal_bergabung": "2015-09-05",
+    "status": "Aktif",
+    "keahlian": ["Financial Reporting", "Tax", "Auditing"],
+    "pendidikan": [
+      {
+        "jenjang": "S1",
+        "jurusan": "Akuntansi",
+        "institusi": "Universitas Airlangga",
+        "tahun": "2000-2004"
+      }
+    ],
+    "pengalaman": [
+      {
+        "posisi": "Senior Accountant",
+        "perusahaan": "PT Finansial Indonesia",
+        "durasi": "2005-2015",
+        "deskripsi": "Manajemen laporan keuangan dan audit internal"
+      }
+    ],
+    "prestasi": [
+      {
+        "nama": "Financial Excellence",
+        "tahun": "2018",
+        "deskripsi": "Penghargaan untuk sistem pelaporan keuangan terbaik"
+      }
+    ]
   },
   {
     "id": 12,
     "nama": "Bambang Wijaya",
     "jabatan": "Teknisi IT",
-    "foto": "https://randomuser.me/api/portraits/men/37.jpg"
+    "foto": "https://randomuser.me/api/portraits/men/37.jpg",
+    "email": "bambang.wijaya@perusahaan.com",
+    "telepon": "081234567812",
+    "tanggal_lahir": "1991-03-08",
+    "alamat": "Jl. Ahmad Yani No. 55, Surakarta",
+    "deskripsi": "Teknisi IT dengan sertifikasi CompTIA dan keahlian troubleshooting jaringan.",
+    "tanggal_bergabung": "2019-01-10",
+    "status": "Aktif",
+    "keahlian": ["Networking", "Hardware", "Troubleshooting"],
+    "pendidikan": [
+      {
+        "jenjang": "D3",
+        "jurusan": "Teknik Komputer",
+        "institusi": "Politeknik Negeri Semarang",
+        "tahun": "2009-2012"
+      }
+    ],
+    "pengalaman": [
+      {
+        "posisi": "IT Support",
+        "perusahaan": "PT Solusi Teknologi",
+        "durasi": "2013-2019",
+        "deskripsi": "Dukungan teknis dan pemeliharaan infrastruktur IT"
+      }
+    ],
+    "prestasi": [
+      {
+        "nama": "Infrastructure Hero",
+        "tahun": "2020",
+        "deskripsi": "Penghargaan untuk pemeliharaan sistem tanpa downtime"
+      }
+    ]
   },
   {
     "id": 13,
     "nama": "Rini Astuti",
     "jabatan": "Manajer Proyek",
-    "foto": "https://randomuser.me/api/portraits/women/50.jpg"
+    "foto": "https://randomuser.me/api/portraits/women/50.jpg",
+    "email": "rini.astuti@perusahaan.com",
+    "telepon": "081234567813",
+    "tanggal_lahir": "1980-10-31",
+    "alamat": "Jl. S Parman No. 23, Jakarta",
+    "deskripsi": "Manajer proyek dengan sertifikasi PMP dan pengalaman 12 tahun mengelola proyek IT.",
+    "tanggal_bergabung": "2014-08-15",
+    "status": "Aktif",
+    "keahlian": ["Project Management", "Agile", "Risk Management"],
+    "pendidikan": [
+      {
+        "jenjang": "S2",
+        "jurusan": "Manajemen Proyek",
+        "institusi": "Universitas Trisakti",
+        "tahun": "2002-2004"
+      }
+    ],
+    "pengalaman": [
+      {
+        "posisi": "Senior Project Coordinator",
+        "perusahaan": "PT Proyek Teknologi",
+        "durasi": "2005-2014",
+        "deskripsi": "Mengelola proyek pengembangan software skala besar"
+      }
+    ],
+    "prestasi": [
+      {
+        "nama": "Project Excellence Award",
+        "tahun": "2019",
+        "deskripsi": "Penghargaan untuk penyelesaian proyek tepat waktu"
+      }
+    ]
   },
   {
     "id": 14,
     "nama": "Ahmad Fauzi",
     "jabatan": "Pengembang Fullstack",
-    "foto": "https://randomuser.me/api/portraits/men/38.jpg"
+    "foto": "https://randomuser.me/api/portraits/men/38.jpg",
+    "email": "ahmad.fauzi@perusahaan.com",
+    "telepon": "081234567814",
+    "tanggal_lahir": "1988-12-03",
+    "alamat": "Jl. Pemuda No. 17, Yogyakarta",
+    "deskripsi": "Fullstack developer dengan keahlian dalam MERN stack dan sistem terdistribusi.",
+    "tanggal_bergabung": "2020-06-20",
+    "status": "Aktif",
+    "keahlian": ["Node.js", "React", "MongoDB"],
+    "pendidikan": [
+      {
+        "jenjang": "S1",
+        "jurusan": "Teknik Informatika",
+        "institusi": "Universitas Brawijaya",
+        "tahun": "2006-2010"
+      }
+    ],
+    "pengalaman": [
+      {
+        "posisi": "Fullstack Engineer",
+        "perusahaan": "PT Web Solutions",
+        "durasi": "2011-2020",
+        "deskripsi": "Pengembangan aplikasi web fullstack dari frontend hingga backend"
+      }
+    ],
+    "prestasi": [
+      {
+        "nama": "Fullstack Master",
+        "tahun": "2021",
+        "deskripsi": "Penghargaan untuk kontribusi teknis terbaik"
+      }
+    ]
   },
   {
     "id": 15,
     "nama": "Diah Anggraeni",
     "jabatan": "Kepala Cabang",
-    "foto": "https://randomuser.me/api/portraits/women/51.jpg"
+    "foto": "https://randomuser.me/api/portraits/women/51.jpg",
+    "email": "diah.anggraeni@perusahaan.com",
+    "telepon": "081234567815",
+    "tanggal_lahir": "1979-04-27",
+    "alamat": "Jl. Urip Sumoharjo No. 89, Surabaya",
+    "deskripsi": "Kepala cabang dengan pengalaman 15+ tahun dalam manajemen operasional dan pengembangan bisnis.",
+    "tanggal_bergabung": "2013-03-12",
+    "status": "Aktif",
+    "keahlian": ["Business Strategy", "Operational Management", "Leadership"],
+    "pendidikan": [
+      {
+        "jenjang": "S2",
+        "jurusan": "Manajemen Bisnis",
+        "institusi": "Universitas Surabaya",
+        "tahun": "2000-2002"
+      }
+    ],
+    "pengalaman": [
+      {
+        "posisi": "Branch Manager",
+        "perusahaan": "PT Multi Cabang",
+        "durasi": "2003-2013",
+        "deskripsi": "Mengelola operasional cabang dan pengembangan tim"
+      }
+    ],
+    "prestasi": [
+      {
+        "nama": "Best Branch Performance",
+        "tahun": "2018",
+        "deskripsi": "Penghargaan untuk kinerja cabang terbaik"
+      }
+    ]
   },
   {
     "id": 16,
     "nama": "Hendra Gunawan",
     "jabatan": "Spesialis Keamanan Siber",
-    "foto": "https://randomuser.me/api/portraits/men/39.jpg"
+    "foto": "https://randomuser.me/api/portraits/men/39.jpg",
+    "email": "hendra.gunawan@perusahaan.com",
+    "telepon": "081234567816",
+    "tanggal_lahir": "1987-07-14",
+    "alamat": "Jl. Pahlawan Revolusi No. 66, Jakarta",
+    "deskripsi": "Spesialis keamanan siber dengan sertifikasi CISSP dan pengalaman dalam ethical hacking.",
+    "tanggal_bergabung": "2019-04-05",
+    "status": "Aktif",
+    "keahlian": ["Cyber Security", "Penetration Testing", "Network Security"],
+    "pendidikan": [
+      {
+        "jenjang": "S1",
+        "jurusan": "Teknik Informatika",
+        "institusi": "Institut Teknologi Sepuluh Nopember",
+        "tahun": "2005-2009"
+      }
+    ],
+    "pengalaman": [
+      {
+        "posisi": "Security Analyst",
+        "perusahaan": "PT Cyber Protection",
+        "durasi": "2010-2019",
+        "deskripsi": "Melakukan audit keamanan dan proteksi sistem"
+      }
+    ],
+    "prestasi": [
+      {
+        "nama": "Security Champion",
+        "tahun": "2020",
+        "deskripsi": "Penghargaan untuk pencegahan serangan siber"
+      }
+    ]
   },
   {
     "id": 17,
     "nama": "Fitriani",
     "jabatan": "Pelatihan dan Pengembangan",
-    "foto": "https://randomuser.me/api/portraits/women/52.jpg"
+    "foto": "https://randomuser.me/api/portraits/women/52.jpg",
+    "email": "fitriani@perusahaan.com",
+    "telepon": "081234567817",
+    "tanggal_lahir": "1986-02-09",
+    "alamat": "Jl. Sisingamangaraja No. 32, Medan",
+    "deskripsi": "Spesialis pelatihan dan pengembangan dengan fokus pada program pengembangan karyawan.",
+    "tanggal_bergabung": "2017-10-25",
+    "status": "Aktif",
+    "keahlian": ["Training Program", "Coaching", "Competency Development"],
+    "pendidikan": [
+      {
+        "jenjang": "S1",
+        "jurusan": "Psikologi Industri",
+        "institusi": "Universitas Sumatera Utara",
+        "tahun": "2004-2008"
+      }
+    ],
+    "pengalaman": [
+      {
+        "posisi": "Training Coordinator",
+        "perusahaan": "PT Human Capital",
+        "durasi": "2009-2017",
+        "deskripsi": "Mengembangkan kurikulum pelatihan dan program pengembangan"
+      }
+    ],
+    "prestasi": [
+      {
+        "nama": "Best Training Program",
+        "tahun": "2019",
+        "deskripsi": "Penghargaan untuk program pengembangan karyawan"
+      }
+    ]
   },
   {
     "id": 18,
     "nama": "Rudi Hartono",
     "jabatan": "Manajer Produk",
-    "foto": "https://randomuser.me/api/portraits/men/40.jpg"
+    "foto": "https://randomuser.me/api/portraits/men/40.jpg",
+    "email": "rudi.hartono@perusahaan.com",
+    "telepon": "081234567818",
+    "tanggal_lahir": "1983-09-11",
+    "alamat": "Jl. Hayam Wuruk No. 21, Jakarta",
+    "deskripsi": "Manajer produk dengan pengalaman dalam product lifecycle management dan pengembangan fitur.",
+    "tanggal_bergabung": "2016-07-08",
+    "status": "Aktif",
+    "keahlian": ["Product Strategy", "Market Research", "UX Design"],
+    "pendidikan": [
+      {
+        "jenjang": "S1",
+        "jurusan": "Teknik Industri",
+        "institusi": "Universitas Indonesia",
+        "tahun": "2001-2005"
+      }
+    ],
+    "pengalaman": [
+      {
+        "posisi": "Product Owner",
+        "perusahaan": "PT Digital Produk",
+        "durasi": "2006-2016",
+        "deskripsi": "Mengelola roadmap produk dan pengembangan fitur"
+      }
+    ],
+    "prestasi": [
+      {
+        "nama": "Product Innovation Award",
+        "tahun": "2021",
+        "deskripsi": "Penghargaan untuk inovasi produk terbaik"
+      }
+    ]
   },
   {
     "id": 19,
     "nama": "Nurul Hasanah",
     "jabatan": "Customer Service",
-    "foto": "https://randomuser.me/api/portraits/women/53.jpg"
+    "foto": "https://randomuser.me/api/portraits/women/53.jpg",
+    "email": "nurul.hasanah@perusahaan.com",
+    "telepon": "081234567819",
+    "tanggal_lahir": "1994-05-28",
+    "alamat": "Jl. M.T. Haryono No. 43, Jakarta",
+    "deskripsi": "Customer service dengan keahlian dalam resolusi konflik dan retensi pelanggan.",
+    "tanggal_bergabung": "2020-09-01",
+    "status": "Aktif",
+    "keahlian": ["Customer Handling", "Conflict Resolution", "Retention"],
+    "pendidikan": [
+      {
+        "jenjang": "D3",
+        "jurusan": "Komunikasi",
+        "institusi": "Politeknik Negeri Jakarta",
+        "tahun": "2012-2015"
+      }
+    ],
+    "pengalaman": [
+      {
+        "posisi": "CS Representative",
+        "perusahaan": "PT Layanan Pelanggan",
+        "durasi": "2016-2020",
+        "deskripsi": "Menangani keluhan pelanggan dan solusi masalah"
+      }
+    ],
+    "prestasi": [
+      {
+        "nama": "Customer Satisfaction Star",
+        "tahun": "2021",
+        "deskripsi": "Penghargaan untuk kepuasan pelanggan tertinggi"
+      }
+    ]
   },
   {
     "id": 20,
     "nama": "Fajar Ramadan",
     "jabatan": "Administrator Sistem",
-    "foto": "https://randomuser.me/api/portraits/men/41.jpg"
+    "foto": "https://randomuser.me/api/portraits/men/41.jpg",
+    "email": "fajar.ramadan@perusahaan.com",
+    "telepon": "081234567820",
+    "tanggal_lahir": "1990-11-07",
+    "alamat": "Jl. Jendral Sudirman No. 99, Bandung",
+    "deskripsi": "Administrator sistem dengan sertifikasi AWS dan keahlian dalam cloud infrastructure.",
+    "tanggal_bergabung": "2018-12-03",
+    "status": "Aktif",
+    "keahlian": ["Cloud Computing", "Linux", "DevOps"],
+    "pendidikan": [
+      {
+        "jenjang": "S1",
+        "jurusan": "Sistem Informasi",
+        "institusi": "Universitas Telkom",
+        "tahun": "2008-2012"
+      }
+    ],
+    "pengalaman": [
+      {
+        "posisi": "System Administrator",
+        "perusahaan": "PT Cloud Services",
+        "durasi": "2013-2018",
+        "deskripsi": "Mengelola server dan infrastruktur cloud"
+      }
+    ],
+    "prestasi": [
+      {
+        "nama": "Infrastructure Excellence",
+        "tahun": "2022",
+        "deskripsi": "Penghargaan untuk manajemen infrastruktur terbaik"
+      }
+    ]
   }
 ]

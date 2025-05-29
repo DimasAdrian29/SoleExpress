@@ -1,5 +1,6 @@
-import vendorsData from "../DataVendor.json";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import vendorsData from "../DataVendor.json";
 import Header from "../components/Header";
 
 export default function VendorList() {
@@ -96,13 +97,19 @@ export default function VendorList() {
                 <th className="px-4 py-3 font-semibold">Popular Products</th>
                 <th className="px-4 py-3 font-semibold">Contact</th>
                 <th className="px-4 py-3 font-semibold">Website</th>
-                <th className="px-4 py-3 font-semibold">Description</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
               {filteredVendors.map((vendor) => (
                 <tr key={vendor.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-2 font-semibold">{vendor.name}</td>
+                  <td className="px-4 py-2 font-semibold">
+                    <Link
+                      to={`/vendorlist/${vendor.id}`}
+                      className="text-blue-600 hover:underline"
+                    >
+                      {vendor.name}
+                    </Link>
+                  </td>
                   <td className="px-4 py-2">{vendor.year_established}</td>
                   <td className="px-4 py-2">{vendor.headquarters_location}</td>
                   <td className="px-4 py-2">
@@ -119,7 +126,7 @@ export default function VendorList() {
                   </td>
                   <td className="px-4 py-2">
                     <div className="flex flex-wrap gap-1">
-                      {vendor.popular_products.map((product, index) => (
+                      {vendor.popular_products.slice(0, 3).map((product, index) => (
                         <span
                           key={index}
                           className="bg-purple-100 text-purple-600 px-2 py-1 rounded-full text-xs"
@@ -145,14 +152,11 @@ export default function VendorList() {
                       Visit Website
                     </a>
                   </td>
-                  <td className="px-4 py-2 text-gray-600 max-w-xs">
-                    {vendor.description}
-                  </td>
                 </tr>
               ))}
               {filteredVendors.length === 0 && (
                 <tr>
-                  <td colSpan="8" className="text-center py-6 text-gray-500">
+                  <td colSpan="7" className="text-center py-6 text-gray-500">
                     No vendors found.
                   </td>
                 </tr>

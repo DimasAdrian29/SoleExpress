@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import karyawanData from "../dataKaryawan.json";
 import Header from "../components/Header";
 import AddKaryawanForm from "../components/AddKaryawanForm";
@@ -108,7 +109,14 @@ export default function TeamManagement() {
                       className="w-16 h-16 object-cover rounded-md"
                     />
                   </td>
-                  <td className="px-4 py-2">{karyawan.nama}</td>
+                  <td className="px-4 py-2">
+                    <Link
+                      to={`/Karyawanlist/${karyawan.id}`}
+                      className="text-blue-600 hover:underline font-medium"
+                    >
+                      {karyawan.nama}
+                    </Link>
+                  </td>
                   <td className="px-4 py-2">{karyawan.jabatan}</td>
                   <td className="px-4 py-2 space-x-2">
                     <button
