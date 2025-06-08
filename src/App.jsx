@@ -9,6 +9,10 @@ import ProductDetail from "./pages/ProductDetail";
 import VendorDetail from "./pages/VendorDetail";
 import DetailKaryawan from "./pages/DetailKaryawan";
 import GaleriDetail from "./pages/GaleriDetail";
+import ArtikelList from "./pages/ArtikelList";
+import UserList from "./pages/UserList";
+import FAQList from "./pages/FAQlist";
+import PesanSaranList from "./pages/PesanSaranList";
 
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const ErrorPage = React.lazy(() => import("./pages/ErrorPage"));
@@ -34,10 +38,14 @@ function App() {
           <Route path="/vendorlist" element={<VendorList />} />
           <Route path="/Karyawanlist" element={<TeamManagement />} />
           <Route path="/galerilist" element={<GaleriManagement />} />
+          <Route path="/artikel" element={<ArtikelList />} />
         <Route path="/produklist/:id" element={<ProductDetail />} />
          <Route path="/vendorlist/:id" element={<VendorDetail />} />
           <Route path="/Karyawanlist/:id" element={<DetailKaryawan />} />
           <Route path="/galerilist/:id" element={<GaleriDetail />} />
+          <Route path="/user" element={<UserList />} />
+          <Route path="/faq" element={<FAQList />} />
+          <Route path="/pesansaran" element={<PesanSaranList />} />
         </Route>
 
         <Route element={<AuthLayout />}>

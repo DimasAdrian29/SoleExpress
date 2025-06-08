@@ -1,3 +1,7 @@
+import { AiFillMessage } from "react-icons/ai"; 
+import { FaQuestion } from "react-icons/fa"; 
+import { RiArticleLine } from "react-icons/ri"; 
+import { AiOutlineUser } from "react-icons/ai"; 
 import { AiFillPicture } from "react-icons/ai"; 
 import { FaUserFriends } from "react-icons/fa"; 
 import { BiErrorAlt } from "react-icons/bi"; 
@@ -45,6 +49,30 @@ export default function MenuList() {
           <NavLink to="/galerilist" className={menuClass}>
           <AiFillPicture  className="text-xl"/>
             <span>Galeri</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/user" className={menuClass}>
+          <AiOutlineUser className="text-xl" />
+            <span>Pengguna</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/artikel" className={menuClass}>
+          <RiArticleLine className="text-xl" />
+            <span>Artikel</span> 
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/faq" className={menuClass}>
+          <FaQuestion className="text-xl"/>
+            <span>FAQ</span> 
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/pesansaran" className={menuClass}>
+           <AiFillMessage className="text-xl" />
+            <span>Pesan Saran</span>
           </NavLink>
         </li>
         <li>
