@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { BsFillExclamationDiamondFill } from 'react-icons/bs';
 import { ImSpinner2 } from 'react-icons/im';
+import { usersAPI } from "../../services/usersAPI";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -27,16 +27,18 @@ export default function Login() {
         setError('');
 
         try {
-            const response = await axios.post('https://dummyjson.com/user/login', {
-                username: dataForm.username,
-                password: dataForm.password,
-            });
+            // Gunakan login dari API Supabase
+            const user = await usersAPI.login(dataForm.username, dataForm.password);
 
-            if (response.status === 200) {
-                navigate('/');
+            if (user) {
+                // Misalnya simpan user ke localStorage atau context (opsional)
+                // localStorage.setItem('user', JSON.stringify(user));
+                navigate('/'); // redirect ke homepage
+            } else {
+                setError('Username/email atau password salah');
             }
         } catch (err) {
-            setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
+            setError('Gagal login. Silakan coba lagi.');
         } finally {
             setLoading(false);
         }
@@ -44,7 +46,6 @@ export default function Login() {
 
     return (
         <div className="min-h-screen flex items-center justify-center relative">
-            {/* Background Image */}
             <div className="fixed inset-0 -z-10">
                 <img
                     src="/img/sepatu.jpg"
@@ -54,7 +55,6 @@ export default function Login() {
                 <div className="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
             </div>
 
-            {/* Login Card */}
             <div className="bg-white rounded-2xl p-10 w-80 sm:w-96 flex flex-col items-center drop-shadow-lg mx-4">
                 <h1 className="text-3xl font-extrabold text-gray-800 flex items-center gap-2 select-none">
                     <span>Soleexpress</span>
@@ -73,14 +73,13 @@ export default function Login() {
                             id="username"
                             name="username"
                             type="text"
-                            placeholder="Username"
+                            placeholder="Username atau Email"
                             required
                             className="w-full border-b border-gray-300 focus:border-gray-600 focus:outline-none text-gray-600 placeholder-gray-400 pr-8 py-2"
                             value={dataForm.username}
                             onChange={handleChange}
                             disabled={loading}
                         />
-                        <i className="fas fa-user absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-sm pointer-events-none" />
                     </div>
                     <div className="relative">
                         <input
@@ -94,7 +93,6 @@ export default function Login() {
                             onChange={handleChange}
                             disabled={loading}
                         />
-                        <i className="fas fa-eye-slash absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-sm pointer-events-none" />
                     </div>
                     <button
                         type="submit"
