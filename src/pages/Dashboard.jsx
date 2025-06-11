@@ -12,7 +12,7 @@ export default function Dashboard() {
   return (
     <div className="flex min-h-screen">
       
-      <main className="flex-1 flex flex-col bg-[#5f73f2] p-4 md:p-6 lg:p-8 min-h-screen relative">
+      <main className="flex-1 flex flex-col bg-[#5f73f2] p-4 md:p-6 lg:p-8 min-h-screen relative rounded-2xl m-2">
       <Header path="/ Pages / Dashboard" title="Dashboard" />
 
         <CardsRow />

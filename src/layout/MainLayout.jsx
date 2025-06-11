@@ -7,7 +7,7 @@ export default function MainLayout(){
 <Sidebar />
     <div id="layout-wrapper" className="flex flex-row flex-1">
       
-      <div id="main-content" className="flex-1 p-4">
+      <div id="main-content" className="flex-1 ">
        
       <Outlet/>
       </div>

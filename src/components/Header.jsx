@@ -21,19 +21,20 @@ export default function Header({ path = "/ Pages / Default", title = "Default" }
         <div className="relative">
           <input
             aria-label="Search input"
-            className="rounded-md py-1 px-3 text-black text-[13px] w-40 focus:outline-none"
+            className="bg-white rounded-md py-1 px-3 text-black text-[13px] w-40 focus:outline-none"
             placeholder="Type here..."
             type="search"
           />
           <i className="fas fa-search absolute right-2 top-1/2 -translate-y-1/2 text-[#a1a1a1] pointer-events-none"></i>
         </div>
         <button
-          aria-label="Sign in"
+          aria-label="Logout"
+          onClick={() => window.location.href = "https://solexpress.vercel.app/"}
           className="flex items-center gap-1 text-white text-[13px] font-semibold"
           type="button"
         >
-          <i className="fas fa-user"></i>
-          <span>Sign-in</span>
+          <i className="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
         </button>
         <button
           aria-label="Settings"

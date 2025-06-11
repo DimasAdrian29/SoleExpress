@@ -49,7 +49,7 @@ export default function TeamManagement() {
   });
 
   return (
-    <div className="flex min-h-screen bg-[#5f73f2]">
+    <div className="flex min-h-screen bg-[#5f73f2] rounded-2xl m-2">
       <main className="flex-1 flex flex-col p-4 md:p-6 lg:p-8">
         <Header path="/ Pages / Tim" title="Tim" />
         <h1 className="text-3xl font-bold text-white mb-6">Admin - Manajemen Tim</h1>

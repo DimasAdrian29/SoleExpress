@@ -26,7 +26,7 @@ export default function GaleriDetail() {
   if (!item) return <div className="p-4">Memuat...</div>;
 
   return (
-    <div className="p-6 bg-white rounded-xl shadow-lg max-w-lg mx-auto mt-6">
+    <div className="p-6 bg-white rounded-xl shadow-lg max-w-lg mx-auto mt-6 rounded-2xl m-2">
       <img
         src={item.image}
         alt={item.title}

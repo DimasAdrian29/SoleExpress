@@ -7,7 +7,7 @@ export default function VendorDetail() {
 
   if (!vendor) {
     return (
-      <div className="min-h-screen bg-[#5f73f2] flex items-center justify-center">
+      <div className="min-h-screen bg-[#5f73f2] flex items-center justify-center rounded-2xl m-2">
         <div className="bg-white p-8 rounded-xl shadow-lg text-center max-w-md">
           <h2 className="text-2xl font-bold text-red-600 mb-4">Vendor Not Found</h2>
           <p className="text-gray-600 mb-6">

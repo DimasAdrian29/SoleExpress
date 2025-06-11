@@ -147,7 +147,7 @@ export default function UserList() {
   );
 
   return (
-    <div className="flex min-h-screen bg-[#5f73f2]">
+    <div className="flex min-h-screen bg-[#5f73f2] rounded-2xl m-2">
       <main className="flex-1 flex flex-col p-4 md:p-6 lg:p-8">
         <Header path="/ Pages / Pengguna" title="Manajemen Pengguna" />
         <h1 className="text-3xl font-bold text-white mb-8">Admin - Manajemen Pengguna</h1>
