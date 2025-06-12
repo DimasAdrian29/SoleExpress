@@ -92,58 +92,13 @@ export default function PesanSaranList() {
     <div className="flex min-h-screen bg-[#5f73f2] rounded-2xl m-2">
       <main className="flex-1 flex flex-col p-4 md:p-6 lg:p-8">
         <Header path="/ Pages / Pesan & Saran" title="Pesan & Saran" />
-        <h1 className="text-3xl font-bold text-white mb-8">Manajemen Pesan & Saran</h1>
+        <h1 className="text-3xl font-bold text-white mb-8">Kontak Masuk</h1>
 
         {error && <AlertBox type="error">{error}</AlertBox>}
         {success && <AlertBox type="success">{success}</AlertBox>}
 
-        {/* Form Tambah */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Kirim Pesan / Saran</h3>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <input
-              type="text"
-              name="nama"
-              value={dataForm.nama}
-              placeholder="Nama Anda"
-              onChange={handleChange}
-              disabled={loading}
-              required
-              className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200"
-            />
-
-            <input
-              type="email"
-              name="email"
-              value={dataForm.email}
-              placeholder="Email Anda"
-              onChange={handleChange}
-              disabled={loading}
-              required
-              className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200"
-            />
-
-            <textarea
-              name="pesan"
-              value={dataForm.pesan}
-              placeholder="Tulis pesan atau saran Anda..."
-              onChange={handleChange}
-              disabled={loading}
-              required
-              rows="4"
-              className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200 resize-none"
-            />
-
-            <button
-              type="submit"
-              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl"
-              disabled={loading}
-            >
-              {loading ? "Mengirim..." : "Kirim Pesan"}
-            </button>
-          </form>
-        </div>
+        
+       
 
         {/* Pencarian */}
         <div className="mb-6">

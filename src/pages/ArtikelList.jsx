@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { artikelAPI } from "../services/artikelAPI";
+import { newsAPI } from "../services/newsAPI";
 import AlertBox from "../components/AlertBox";
 import EmptyState from "../components/EmptyState";
 import LoadingSpinner from "../components/LoadingSpinner";
-import { AiFillDelete, AiFillEdit, AiOutlineSave, AiOutlineClose } from "react-icons/ai";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import Header from "../components/Header";
 
 export default function ArtikelList() {
@@ -12,28 +12,23 @@ export default function ArtikelList() {
   const [success, setSuccess] = useState("");
   const [articles, setArticles] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // State untuk form tambah/edit
   const [dataForm, setDataForm] = useState({
-    judul: "",
-    isi: "",
-    url_image: ""
+    title: "",
+    content: ""
   });
 
-  // State untuk mode edit
   const [editingId, setEditingId] = useState(null);
 
-  // Load data saat pertama di-render
   useEffect(() => {
     loadArticles();
   }, []);
 
-  // Fungsi untuk memuat artikel
   const loadArticles = async () => {
     try {
       setLoading(true);
-      setError("");
-      const data = await artikelAPI.fetchAll();
+      const data = await newsAPI.fetchNews();
       setArticles(data);
     } catch (err) {
       setError("Gagal memuat artikel");
@@ -43,20 +38,17 @@ export default function ArtikelList() {
     }
   };
 
-  // Handle untuk aksi hapus data
   const handleDelete = async (id) => {
-    const konfirmasi = confirm("Yakin ingin menghapus artikel ini?");
-    if (!konfirmasi) return;
+    const confirmDelete = confirm("Yakin ingin menghapus artikel ini?");
+    if (!confirmDelete) return;
 
     try {
       setLoading(true);
-      setError("");
-      setSuccess("");
-
-      await artikelAPI.delete(id);
+      await fetch(`${newsAPI.API_URL}?id=eq.${id}`, {
+        method: "DELETE",
+        headers: newsAPI.headers
+      });
       setSuccess("Artikel berhasil dihapus!");
-
-      // Refresh data
       loadArticles();
     } catch (err) {
       setError(`Terjadi kesalahan: ${err.message}`);
@@ -65,35 +57,31 @@ export default function ArtikelList() {
     }
   };
 
-  const handleChange = (evt) => {
-    const { name, value } = evt.target;
-    setDataForm({
-      ...dataForm,
-      [name]: value,
-    });
+  const openModal = (item = null) => {
+    if (item) {
+      setEditingId(item.id);
+      setDataForm({
+        title: item.title,
+        content: item.content
+      });
+    } else {
+      setEditingId(null);
+      setDataForm({ title: "", content: "" });
+    }
+    setIsModalOpen(true);
   };
 
-  // Handle untuk memulai edit
-  const startEdit = (article) => {
-    setEditingId(article.id);
-    setDataForm({
-      judul: article.judul,
-      isi: article.isi,
-      url_image: article.url_image || ""
-    });
-  };
-
-  // Handle untuk membatalkan edit
-  const cancelEdit = () => {
+  const closeModal = () => {
     setEditingId(null);
-    setDataForm({
-      judul: "",
-      isi: "",
-      url_image: ""
-    });
+    setDataForm({ title: "", content: "" });
+    setIsModalOpen(false);
   };
 
-  // Handle untuk submit form (create dan update)
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setDataForm({ ...dataForm, [name]: value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -102,20 +90,22 @@ export default function ArtikelList() {
       setSuccess("");
 
       if (editingId) {
-        // Mode edit: update artikel
-        await artikelAPI.update(editingId, dataForm);
+        await fetch(`${newsAPI.API_URL}?id=eq.${editingId}`, {
+          method: "PATCH",
+          headers: newsAPI.headers,
+          body: JSON.stringify(dataForm)
+        });
         setSuccess("Artikel berhasil diperbarui!");
       } else {
-        // Mode tambah: buat artikel baru
-        await artikelAPI.create(dataForm);
+        await fetch(newsAPI.API_URL, {
+          method: "POST",
+          headers: newsAPI.headers,
+          body: JSON.stringify(dataForm)
+        });
         setSuccess("Artikel berhasil ditambahkan!");
       }
 
-      // Reset form
-      setDataForm({ judul: "", isi: "", url_image: "" });
-      setEditingId(null);
-
-      // Refresh data
+      closeModal();
       loadArticles();
     } catch (err) {
       setError(`Terjadi kesalahan: ${err.message}`);
@@ -124,15 +114,14 @@ export default function ArtikelList() {
     }
   };
 
-  // Filter artikel berdasarkan pencarian
   const filteredArticles = articles.filter(
-    (article) =>
-      article.judul.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      article.isi.toLowerCase().includes(searchTerm.toLowerCase())
+    (item) =>
+      item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.content.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <div className="flex min-h-screen bg-[#5f73f2]">
+    <div className="flex min-h-screen bg-[#5f73f2] rounded-2xl m-2">
       <main className="flex-1 flex flex-col p-4 md:p-6 lg:p-8">
         <Header path="/ Pages / Artikel" title="Artikel" />
         <h1 className="text-3xl font-bold text-white mb-8">Admin - Manajemen Artikel</h1>
@@ -140,176 +129,121 @@ export default function ArtikelList() {
         {error && <AlertBox type="error">{error}</AlertBox>}
         {success && <AlertBox type="success">{success}</AlertBox>}
 
-        {/* Form Card */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">
-            {editingId ? "Edit Artikel" : "Tambah Artikel Baru"}
-          </h3>
+        <button
+          onClick={() => openModal()}
+          className="mb-4 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl"
+        >
+          Tambah Artikel
+        </button>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <input
-              type="text"
-              name="judul"
-              value={dataForm.judul}
-              placeholder="Judul artikel"
-              onChange={handleChange}
-              disabled={loading}
-              required
-              className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200 focus:outline-none
-                        focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all
-                        duration-200"
-            />
-
-            <textarea
-              name="isi"
-              value={dataForm.isi}
-              placeholder="Isi artikel"
-              onChange={handleChange}
-              disabled={loading}
-              required
-              rows="4"
-              className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200 focus:outline-none
-                        focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all
-                        duration-200 resize-none"
-            />
-
-            <input
-              type="text"
-              name="url_image"
-              value={dataForm.url_image}
-              placeholder="URL Gambar (opsional)"
-              onChange={handleChange}
-              disabled={loading}
-              className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200 focus:outline-none
-                        focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all
-                        duration-200"
-            />
-
-            <div className="flex gap-3">
-              <button
-                type="submit"
-                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold
-                          rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500
-                          focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed
-                          transition-all duration-200 shadow-lg flex items-center gap-2"
-              >
-                {loading ? (
-                  "Mohon Tunggu..."
-                ) : editingId ? (
-                  <>
-                    <AiOutlineSave className="text-xl" /> Simpan Perubahan
-                  </>
-                ) : (
-                  "Tambah Artikel"
-                )}
-              </button>
-
-              {editingId && (
-                <button
-                  type="button"
-                  onClick={cancelEdit}
-                  className="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-semibold
-                            rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-500
-                            focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed
-                            transition-all duration-200 shadow-lg flex items-center gap-2"
-                >
-                  <AiOutlineClose /> Batal
-                </button>
-              )}
+        {isModalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="bg-white p-6 rounded-xl w-full max-w-md shadow-xl">
+              <h3 className="text-lg font-semibold mb-4">
+                {editingId ? "Edit Artikel" : "Tambah Artikel Baru"}
+              </h3>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <input
+                  type="text"
+                  name="title"
+                  value={dataForm.title}
+                  onChange={handleChange}
+                  placeholder="Judul Artikel"
+                  required
+                  className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200"
+                />
+                <textarea
+                  name="content"
+                  value={dataForm.content}
+                  onChange={handleChange}
+                  placeholder="Konten Artikel"
+                  rows="6"
+                  required
+                  className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200"
+                />
+                <div className="flex gap-3 justify-end">
+                  <button
+                    type="submit"
+                    className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl"
+                  >
+                    {loading ? "Menyimpan..." : editingId ? "Simpan Perubahan" : "Tambah"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={closeModal}
+                    className="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-xl"
+                  >
+                    Batal
+                  </button>
+                </div>
+              </form>
             </div>
-          </form>
-        </div>
+          </div>
+        )}
 
-        {/* Filter Section */}
         <div className="mb-6">
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Cari artikel..."
-            className="w-full p-3 bg-white rounded-xl border border-gray-200 focus:outline-none
-                      focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-lg"
+            className="w-full p-3 bg-white rounded-xl border border-gray-200"
           />
         </div>
 
-        {/* Articles Table */}
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-          <div className="px-6 py-4">
-            <h3 className="text-lg font-semibold">
-              Daftar Artikel ({filteredArticles.length})
-            </h3>
-          </div>
-
           {loading && <LoadingSpinner text="Memuat artikel..." />}
-
-          {!loading && error && (
-            <EmptyState text="Terjadi kesalahan saat memuat artikel" />
-          )}
-
-          {!loading && !error && filteredArticles.length === 0 && (
-            <EmptyState text="Tidak ada artikel yang ditemukan" />
-          )}
+          {!loading && error && <EmptyState text="Terjadi kesalahan saat memuat artikel" />}
+          {!loading && !error && filteredArticles.length === 0 && <EmptyState text="Tidak ada artikel ditemukan" />}
 
           {!loading && !error && filteredArticles.length > 0 && (
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-blue-100">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">#</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">Judul</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">Gambar</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">Aksi</th>
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-blue-100">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">#</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Judul</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Konten</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Tanggal</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Aksi</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {filteredArticles.map((item, index) => (
+                  <tr key={item.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 text-sm text-gray-700">{index + 1}</td>
+                    <td className="px-6 py-4 text-sm text-gray-800">{item.title}</td>
+                    <td className="px-6 py-4 text-sm text-gray-600 truncate max-w-sm">{item.content}</td>
+                    <td className="px-6 py-4 text-sm text-gray-500">
+                      {new Date(item.created_at).toLocaleDateString("id-ID", {
+                        day: "2-digit",
+                        month: "long",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex gap-3">
+                        <button
+                          onClick={() => openModal(item)}
+                          disabled={loading}
+                          className="text-blue-500 hover:text-blue-700"
+                        >
+                          <AiFillEdit className="text-2xl" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(item.id)}
+                          disabled={loading}
+                          className="text-red-500 hover:text-red-700"
+                        >
+                          <AiFillDelete className="text-2xl" />
+                        </button>
+                      </div>
+                    </td>
                   </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {filteredArticles.map((article, index) => (
-                    <tr key={article.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-700">
-                        {index + 1}
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="font-semibold text-blue-600">
-                          {article.judul}
-                        </div>
-                        <div className="text-sm text-gray-500 mt-1 line-clamp-2">
-                          {article.isi}
-                        </div>
-                        <div className="text-xs text-gray-400 mt-1">
-                          {new Date(article.created_at).toLocaleString()}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {article.url_image && (
-                          <img 
-                            src={article.url_image} 
-                            alt={article.judul}
-                            className="w-16 h-16 object-cover rounded-lg"
-                          />
-                        )}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <div className="flex gap-3">
-                          <button
-                            onClick={() => startEdit(article)}
-                            disabled={loading}
-                            className="text-blue-500 hover:text-blue-700 transition-colors"
-                          >
-                            <AiFillEdit className="text-2xl" />
-                          </button>
-                          <button
-                            onClick={() => handleDelete(article.id)}
-                            disabled={loading}
-                            className="text-red-400 hover:text-red-600 transition-colors"
-                          >
-                            <AiFillDelete className="text-2xl" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           )}
         </div>
       </main>

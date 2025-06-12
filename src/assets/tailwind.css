@@ -16,6 +16,9 @@
   src: url('/fonts/Poppins-ExtraBold.ttf');
 }
 
+@plugin "daisyui" {
+    themes: light --default, dark --prefersdark;
+}
 /* Custom Theme Variables */
 :root {
   --font-barlow: "Barlow", sans-serif;

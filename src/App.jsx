@@ -13,6 +13,10 @@ import ArtikelList from "./pages/ArtikelList";
 import UserList from "./pages/UserList";
 import FAQList from "./pages/FAQlist";
 import PesanSaranList from "./pages/PesanSaranList";
+import CareerList from "./pages/CareerList";
+import TeamList from "./pages/TeamList";
+import TentangSolexpressEditor from "./pages/TentangSolexpressEditor";
+import TestimoniList from "./pages/TestimoniList";
 
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const ErrorPage = React.lazy(() => import("./pages/ErrorPage"));
@@ -45,7 +49,11 @@ function App() {
           <Route path="/galerilist/:id" element={<GaleriDetail />} />
           <Route path="/user" element={<UserList />} />
           <Route path="/faq" element={<FAQList />} />
+          <Route path="/career" element={<CareerList />} />
           <Route path="/pesansaran" element={<PesanSaranList />} />
+           <Route path="/team" element={<TeamList />} />
+            <Route path="/about" element={<TentangSolexpressEditor />} />
+             <Route path="/testimoni" element={<TestimoniList />} />
         </Route>
 
         <Route element={<AuthLayout />}>

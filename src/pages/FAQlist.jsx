@@ -3,7 +3,7 @@ import { faqAPI } from "../services/faqAPI";
 import AlertBox from "../components/AlertBox";
 import EmptyState from "../components/EmptyState";
 import LoadingSpinner from "../components/LoadingSpinner";
-import { AiFillDelete, AiFillEdit, AiOutlineSave, AiOutlineClose } from "react-icons/ai";
+import { AiFillDelete, AiFillEdit, AiOutlineClose } from "react-icons/ai";
 import Header from "../components/Header";
 
 export default function FAQList() {
@@ -12,10 +12,12 @@ export default function FAQList() {
   const [success, setSuccess] = useState("");
   const [faqs, setFaqs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [dataForm, setDataForm] = useState({
-    pertanyaan: "",
-    jawaban: ""
+    name: "",
+    question: "",
+    answer: ""
   });
 
   const [editingId, setEditingId] = useState(null);
@@ -28,7 +30,7 @@ export default function FAQList() {
     try {
       setLoading(true);
       setError("");
-      const data = await faqAPI.fetchAllFAQ();
+      const data = await faqAPI.fetchFAQs();
       setFaqs(data);
     } catch (err) {
       setError("Gagal memuat FAQ");
@@ -44,7 +46,10 @@ export default function FAQList() {
 
     try {
       setLoading(true);
-      await faqAPI.deleteFAQ(id);
+      await fetch(`${faqAPI.baseURL}/${id}`, {
+        method: "DELETE",
+        headers: faqAPI.headers,
+      });
       setSuccess("FAQ berhasil dihapus!");
       loadFAQs();
     } catch (err) {
@@ -59,14 +64,25 @@ export default function FAQList() {
     setDataForm({ ...dataForm, [name]: value });
   };
 
-  const startEdit = (faq) => {
-    setEditingId(faq.id);
-    setDataForm({ pertanyaan: faq.pertanyaan, jawaban: faq.jawaban });
+  const openModal = (faq = null) => {
+    if (faq) {
+      setEditingId(faq.id);
+      setDataForm({
+        name: faq.name,
+        question: faq.question,
+        answer: faq.answer || ""
+      });
+    } else {
+      setEditingId(null);
+      setDataForm({ name: "", question: "", answer: "" });
+    }
+    setIsModalOpen(true);
   };
 
-  const cancelEdit = () => {
+  const closeModal = () => {
     setEditingId(null);
-    setDataForm({ pertanyaan: "", jawaban: "" });
+    setDataForm({ name: "", question: "", answer: "" });
+    setIsModalOpen(false);
   };
 
   const handleSubmit = async (e) => {
@@ -77,14 +93,18 @@ export default function FAQList() {
       setSuccess("");
 
       if (editingId) {
-        await faqAPI.updateFAQ(editingId, dataForm);
+        await fetch(`${faqAPI.baseURL}?id=eq.${editingId}`, {
+          method: "PATCH",
+          headers: faqAPI.headers,
+          body: JSON.stringify(dataForm),
+        });
         setSuccess("FAQ berhasil diperbarui!");
       } else {
-        await faqAPI.createFAQ(dataForm);
+        await faqAPI.submitVisitorQuestion(dataForm);
         setSuccess("FAQ berhasil ditambahkan!");
       }
 
-      cancelEdit();
+      closeModal();
       loadFAQs();
     } catch (err) {
       setError(`Terjadi kesalahan: ${err.message}`);
@@ -95,8 +115,8 @@ export default function FAQList() {
 
   const filteredFAQs = faqs.filter(
     (faq) =>
-      faq.pertanyaan.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      faq.jawaban.toLowerCase().includes(searchTerm.toLowerCase())
+      faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (faq.answer || "").toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -108,54 +128,65 @@ export default function FAQList() {
         {error && <AlertBox type="error">{error}</AlertBox>}
         {success && <AlertBox type="success">{success}</AlertBox>}
 
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">
-            {editingId ? "Edit FAQ" : "Tambah FAQ Baru"}
-          </h3>
+        <button
+          onClick={() => openModal()}
+          className="mb-4 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl"
+        >
+          Tambah FAQ Baru
+        </button>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <input
-              type="text"
-              name="pertanyaan"
-              value={dataForm.pertanyaan}
-              placeholder="Pertanyaan"
-              onChange={handleChange}
-              disabled={loading}
-              required
-              className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200"
-            />
-
-            <textarea
-              name="jawaban"
-              value={dataForm.jawaban}
-              placeholder="Jawaban"
-              onChange={handleChange}
-              disabled={loading}
-              required
-              rows="4"
-              className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200 resize-none"
-            />
-
-            <div className="flex gap-3">
-              <button
-                type="submit"
-                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl"
-              >
-                {loading ? "Mohon Tunggu..." : editingId ? "Simpan Perubahan" : "Tambah FAQ"}
-              </button>
-
-              {editingId && (
-                <button
-                  type="button"
-                  onClick={cancelEdit}
-                  className="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-xl"
-                >
-                  <AiOutlineClose /> Batal
-                </button>
-              )}
+        {isModalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="bg-white p-6 rounded-xl w-full max-w-md shadow-xl">
+              <h3 className="text-lg font-semibold mb-4">
+                {editingId ? "Edit FAQ" : "Tambah FAQ Baru"}
+              </h3>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <input
+                  type="text"
+                  name="name"
+                  value={dataForm.name}
+                  onChange={handleChange}
+                  placeholder="Nama"
+                  required
+                  className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200"
+                />
+                <input
+                  type="text"
+                  name="question"
+                  value={dataForm.question}
+                  onChange={handleChange}
+                  placeholder="Pertanyaan"
+                  required
+                  className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200"
+                />
+                <textarea
+                  name="answer"
+                  value={dataForm.answer}
+                  onChange={handleChange}
+                  placeholder="Jawaban"
+                  rows="4"
+                  className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200"
+                />
+                <div className="flex gap-3 justify-end">
+                  <button
+                    type="submit"
+                    className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl"
+                  >
+                    {loading ? "Menyimpan..." : editingId ? "Simpan Perubahan" : "Tambah"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={closeModal}
+                    className="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-xl"
+                  >
+                    Batal
+                  </button>
+                </div>
+              </form>
             </div>
-          </form>
-        </div>
+          </div>
+        )}
 
         <div className="mb-6">
           <input
@@ -168,56 +199,50 @@ export default function FAQList() {
         </div>
 
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-          <div className="px-6 py-4">
-            <h3 className="text-lg font-semibold">
-              Daftar FAQ ({filteredFAQs.length})
-            </h3>
-          </div>
-
           {loading && <LoadingSpinner text="Memuat FAQ..." />}
           {!loading && error && <EmptyState text="Terjadi kesalahan saat memuat FAQ" />}
           {!loading && !error && filteredFAQs.length === 0 && <EmptyState text="Tidak ada FAQ yang ditemukan" />}
 
           {!loading && !error && filteredFAQs.length > 0 && (
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-blue-100">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">#</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Pertanyaan</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Jawaban</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Aksi</th>
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-blue-100">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">#</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Nama</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Pertanyaan</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Jawaban</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Aksi</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {filteredFAQs.map((faq, index) => (
+                  <tr key={faq.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 text-sm text-gray-700">{index + 1}</td>
+                    <td className="px-6 py-4 text-sm text-gray-700">{faq.name}</td>
+                    <td className="px-6 py-4 text-sm text-gray-800">{faq.question}</td>
+                    <td className="px-6 py-4 text-sm text-gray-600">{faq.answer || "-"}</td>
+                    <td className="px-6 py-4">
+                      <div className="flex gap-3">
+                        <button
+                          onClick={() => openModal(faq)}
+                          disabled={loading}
+                          className="text-blue-500 hover:text-blue-700"
+                        >
+                          <AiFillEdit className="text-2xl" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(faq.id)}
+                          disabled={loading}
+                          className="text-red-500 hover:text-red-700"
+                        >
+                          <AiFillDelete className="text-2xl" />
+                        </button>
+                      </div>
+                    </td>
                   </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {filteredFAQs.map((faq, index) => (
-                    <tr key={faq.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 text-sm text-gray-700">{index + 1}</td>
-                      <td className="px-6 py-4 text-sm text-gray-800">{faq.pertanyaan}</td>
-                      <td className="px-6 py-4 text-sm text-gray-600">{faq.jawaban}</td>
-                      <td className="px-6 py-4">
-                        <div className="flex gap-3">
-                          <button
-                            onClick={() => startEdit(faq)}
-                            disabled={loading}
-                            className="text-blue-500 hover:text-blue-700"
-                          >
-                            <AiFillEdit className="text-2xl" />
-                          </button>
-                          <button
-                            onClick={() => handleDelete(faq.id)}
-                            disabled={loading}
-                            className="text-red-500 hover:text-red-700"
-                          >
-                            <AiFillDelete className="text-2xl" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           )}
         </div>
       </main>
