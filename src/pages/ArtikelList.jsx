@@ -13,45 +13,25 @@ export default function ArtikelList() {
   const [articles, setArticles] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingId, setEditingId] = useState(null);
 
   const [dataForm, setDataForm] = useState({
     title: "",
-    content: ""
+    content: "",
+    image_url: "",
   });
-
-  const [editingId, setEditingId] = useState(null);
 
   useEffect(() => {
     loadArticles();
   }, []);
 
   const loadArticles = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
       const data = await newsAPI.fetchNews();
       setArticles(data);
     } catch (err) {
       setError("Gagal memuat artikel");
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleDelete = async (id) => {
-    const confirmDelete = confirm("Yakin ingin menghapus artikel ini?");
-    if (!confirmDelete) return;
-
-    try {
-      setLoading(true);
-      await fetch(`${newsAPI.API_URL}?id=eq.${id}`, {
-        method: "DELETE",
-        headers: newsAPI.headers
-      });
-      setSuccess("Artikel berhasil dihapus!");
-      loadArticles();
-    } catch (err) {
-      setError(`Terjadi kesalahan: ${err.message}`);
     } finally {
       setLoading(false);
     }
@@ -62,53 +42,65 @@ export default function ArtikelList() {
       setEditingId(item.id);
       setDataForm({
         title: item.title,
-        content: item.content
+        content: item.content,
+        image_url: item.image_url || "",
       });
     } else {
       setEditingId(null);
-      setDataForm({ title: "", content: "" });
+      setDataForm({ title: "", content: "", image_url: "" });
     }
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setEditingId(null);
-    setDataForm({ title: "", content: "" });
+    setDataForm({ title: "", content: "", image_url: "" });
     setIsModalOpen(false);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setDataForm({ ...dataForm, [name]: value });
+    setDataForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      setLoading(true);
-      setError("");
-      setSuccess("");
+    setLoading(true);
+    setError("");
+    setSuccess("");
 
+    try {
       if (editingId) {
-        await fetch(`${newsAPI.API_URL}?id=eq.${editingId}`, {
-          method: "PATCH",
-          headers: newsAPI.headers,
-          body: JSON.stringify(dataForm)
-        });
+        await newsAPI.updateNews(editingId, dataForm);
         setSuccess("Artikel berhasil diperbarui!");
       } else {
-        await fetch(newsAPI.API_URL, {
-          method: "POST",
-          headers: newsAPI.headers,
-          body: JSON.stringify(dataForm)
-        });
+        const newItem = await newsAPI.createNews(dataForm);
+        setArticles((prev) => [newItem, ...prev]); // langsung tambah
         setSuccess("Artikel berhasil ditambahkan!");
       }
 
       closeModal();
-      loadArticles();
     } catch (err) {
-      setError(`Terjadi kesalahan: ${err.message}`);
+      console.error(err);
+      setError("Terjadi kesalahan saat menyimpan artikel.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!confirm("Yakin ingin menghapus artikel ini?")) return;
+    setLoading(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      await newsAPI.deleteNews(id);
+      setSuccess("Artikel berhasil dihapus!");
+      setArticles((prev) => prev.filter((item) => item.id !== id));
+    } catch (err) {
+      console.error(err);
+      setError("Gagal menghapus artikel");
     } finally {
       setLoading(false);
     }
@@ -136,9 +128,10 @@ export default function ArtikelList() {
           Tambah Artikel
         </button>
 
+        {/* Modal Form */}
         {isModalOpen && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-white p-6 rounded-xl w-full max-w-md shadow-xl">
+            <div className="bg-white p-6 rounded-xl w-full max-w-lg shadow-xl">
               <h3 className="text-lg font-semibold mb-4">
                 {editingId ? "Edit Artikel" : "Tambah Artikel Baru"}
               </h3>
@@ -148,7 +141,7 @@ export default function ArtikelList() {
                   name="title"
                   value={dataForm.title}
                   onChange={handleChange}
-                  placeholder="Judul Artikel"
+                  placeholder="Judul"
                   required
                   className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200"
                 />
@@ -159,6 +152,14 @@ export default function ArtikelList() {
                   placeholder="Konten Artikel"
                   rows="6"
                   required
+                  className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200"
+                />
+                <input
+                  type="text"
+                  name="image_url"
+                  value={dataForm.image_url}
+                  onChange={handleChange}
+                  placeholder="URL Gambar"
                   className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200"
                 />
                 <div className="flex gap-3 justify-end">
@@ -191,30 +192,37 @@ export default function ArtikelList() {
           />
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div className="bg-white rounded-xl shadow-lg overflow-auto">
           {loading && <LoadingSpinner text="Memuat artikel..." />}
           {!loading && error && <EmptyState text="Terjadi kesalahan saat memuat artikel" />}
-          {!loading && !error && filteredArticles.length === 0 && <EmptyState text="Tidak ada artikel ditemukan" />}
-
+          {!loading && !error && filteredArticles.length === 0 && (
+            <EmptyState text="Tidak ada artikel ditemukan" />
+          )}
           {!loading && !error && filteredArticles.length > 0 && (
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="min-w-full divide-y divide-gray-200 text-sm">
               <thead className="bg-blue-100">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">#</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Judul</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Konten</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Tanggal</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Aksi</th>
+                  <th className="px-4 py-2 text-left font-semibold">#</th>
+                  <th className="px-4 py-2 text-left font-semibold">Judul</th>
+                  <th className="px-4 py-2 text-left font-semibold">Gambar</th>
+                  <th className="px-4 py-2 text-left font-semibold">Tanggal</th>
+                  <th className="px-4 py-2 text-left font-semibold">Aksi</th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="divide-y divide-gray-200">
                 {filteredArticles.map((item, index) => (
-                  <tr key={item.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 text-sm text-gray-700">{index + 1}</td>
-                    <td className="px-6 py-4 text-sm text-gray-800">{item.title}</td>
-                    <td className="px-6 py-4 text-sm text-gray-600 truncate max-w-sm">{item.content}</td>
-                    <td className="px-6 py-4 text-sm text-gray-500">
-                      {new Date(item.created_at).toLocaleDateString("id-ID", {
+                  <tr key={item.id}>
+                    <td className="px-4 py-3">{index + 1}</td>
+                    <td className="px-4 py-3">{item.title}</td>
+                    <td className="px-4 py-3">
+                      {item.image_url ? (
+                        <img src={item.image_url} alt={item.title} className="h-12 rounded" />
+                      ) : (
+                        "-"
+                      )}
+                    </td>
+                    <td className="px-4 py-3 text-gray-500">
+                      {new Date(item.created_at).toLocaleString("id-ID", {
                         day: "2-digit",
                         month: "long",
                         year: "numeric",
@@ -222,21 +230,19 @@ export default function ArtikelList() {
                         minute: "2-digit",
                       })}
                     </td>
-                    <td className="px-6 py-4">
-                      <div className="flex gap-3">
+                    <td className="px-4 py-3">
+                      <div className="flex gap-2">
                         <button
                           onClick={() => openModal(item)}
-                          disabled={loading}
                           className="text-blue-500 hover:text-blue-700"
                         >
-                          <AiFillEdit className="text-2xl" />
+                          <AiFillEdit className="text-xl" />
                         </button>
                         <button
                           onClick={() => handleDelete(item.id)}
-                          disabled={loading}
                           className="text-red-500 hover:text-red-700"
                         >
-                          <AiFillDelete className="text-2xl" />
+                          <AiFillDelete className="text-xl" />
                         </button>
                       </div>
                     </td>
