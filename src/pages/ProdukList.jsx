@@ -12,6 +12,8 @@ export default function ProductList() {
     selectedBrand: "",
   });
   const [modalData, setModalData] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const initialModal = {
     name: "", img: "", brand: "", category: "", price: 0, discount: 0,
@@ -21,7 +23,6 @@ export default function ProductList() {
     warranty: "", care_instructions: "", designed_for: ""
   };
 
-  // Fetch semua data dari Supabase
   const fetchData = async () => {
     setLoading(true);
     const data = await dataSepatuAPI.fetchAll();
@@ -55,7 +56,6 @@ export default function ProductList() {
     return matchesSearch && matchesTag && matchesBrand;
   });
 
-  // Open modal untuk tambah atau edit
   const openAdd = () => {
     setModalData({ ...initialModal });
     document.getElementById("product_modal").showModal();
@@ -65,62 +65,55 @@ export default function ProductList() {
     document.getElementById("product_modal").showModal();
   };
 
-  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setModalData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const {
-    id, // ambil id terpisah
-    ...restData // sisanya masuk ke payload
-  } = modalData;
+    const { id, ...restData } = modalData;
 
-  const payload = {
-    ...restData,
-    price: Number(restData.price) || 0,
-    discount: Number(restData.discount) || 0,
-    rating: Number(restData.rating) || 0,
-    stock: Number(restData.stock) || 0,
-    length: Number(restData.length) || 0,
-    width: Number(restData.width) || 0,
-    height: Number(restData.height) || 0,
-    name: restData.name || '',
-    img: restData.img || '',
-    brand: restData.brand || '',
-    category: restData.category || '',
-    tag1: restData.tag1 || '',
-    tag2: restData.tag2 || '',
-    tag3: restData.tag3 || '',
-    upper_material: restData.upper_material || '',
-    sole_material: restData.sole_material || '',
-    lining_material: restData.lining_material || '',
-    warranty: restData.warranty || '',
-    care_instructions: restData.care_instructions || '',
-    designed_for: restData.designed_for || ''
+    const payload = {
+      ...restData,
+      price: Number(restData.price) || 0,
+      discount: Number(restData.discount) || 0,
+      rating: Number(restData.rating) || 0,
+      stock: Number(restData.stock) || 0,
+      length: Number(restData.length) || 0,
+      width: Number(restData.width) || 0,
+      height: Number(restData.height) || 0,
+      name: restData.name || '',
+      img: restData.img || '',
+      brand: restData.brand || '',
+      category: restData.category || '',
+      tag1: restData.tag1 || '',
+      tag2: restData.tag2 || '',
+      tag3: restData.tag3 || '',
+      upper_material: restData.upper_material || '',
+      sole_material: restData.sole_material || '',
+      lining_material: restData.lining_material || '',
+      warranty: restData.warranty || '',
+      care_instructions: restData.care_instructions || '',
+      designed_for: restData.designed_for || ''
+    };
+
+    try {
+      if (id) {
+        await dataSepatuAPI.update(id, payload);
+      } else {
+        await dataSepatuAPI.create(payload);
+      }
+
+      await fetchData();
+      document.getElementById("product_modal").close();
+    } catch (err) {
+      console.error("Gagal simpan data:", err?.response?.data || err);
+      alert("Error saat simpan data:\n" + (err?.response?.data?.message || err?.message || "Unknown error"));
+    }
   };
 
-  try {
-    if (id) {
-      await dataSepatuAPI.update(id, payload); // hanya kirim payload tanpa id
-    } else {
-      await dataSepatuAPI.create(payload); // id juga tidak perlu dikirim saat create
-    }
-
-    await fetchData();
-    document.getElementById("product_modal").close();
-  } catch (err) {
-    console.error("Gagal simpan data:", err?.response?.data || err);
-    alert("Error saat simpan data:\n" + (err?.response?.data?.message || err?.message || "Unknown error"));
-  }
-};
-
-
-
-  // Hapus produk sesuai ID
   const handleDelete = async (id) => {
     if (confirm("Yakin ingin menghapus?")) {
       await dataSepatuAPI.delete(id);
@@ -128,9 +121,10 @@ export default function ProductList() {
     }
   };
 
-  // Tag dan brand unik untuk filter dropdown
   const allTags = [...new Set(productsData.flatMap(p => [p.tag1, p.tag2, p.tag3].filter(Boolean)))];
   const allBrands = [...new Set(productsData.map(p => p.brand))];
+
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
   return (
     <div className="flex min-h-screen bg-[#5f73f2] rounded-2xl m-2">
@@ -138,10 +132,8 @@ export default function ProductList() {
         <Header path="/ Pages / Produk" title="Produk" />
         <h1 className="text-3xl font-bold text-white mb-6">Admin - Product Management</h1>
 
-        {/* Tombol Tambah */}
         <button className="btn mb-4" onClick={openAdd}>+ Tambah Produk</button>
 
-        {/* Filter */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
           <input name="searchTerm" value={dataForm.searchTerm} onChange={handleChangeFilter}
             placeholder="Search name or brand..." className="p-3 border rounded-md bg-white" />
@@ -157,7 +149,6 @@ export default function ProductList() {
           </select>
         </div>
 
-        {/* Table */}
         <div className="overflow-x-auto bg-white rounded-xl shadow-lg">
           <table className="min-w-full divide-y divide-gray-200 text-sm">
             <thead className="bg-blue-100 text-left text-gray-800">
@@ -171,7 +162,9 @@ export default function ProductList() {
               {!loading && filteredProducts.length === 0 && (
                 <tr><td colSpan="10" className="text-center py-6">No products found.</td></tr>
               )}
-              {filteredProducts.map(p => (
+              {filteredProducts
+                .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+                .map(p => (
                 <tr key={p.id} className="hover:bg-gray-50">
                   <td className="px-4 py-2"><img src={p.img} alt={p.name} className="w-16 h-16 rounded-md" /></td>
                   <td className="px-4 py-2"><Link to={`/produklist/${p.id}`} className="text-blue-500 hover:underline">{p.name}</Link></td>
@@ -194,13 +187,38 @@ export default function ProductList() {
               ))}
             </tbody>
           </table>
+
+          {filteredProducts.length > itemsPerPage && (
+            <div className="flex justify-center items-center gap-2 py-4">
+              <button
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                className="px-4 py-2 bg-white text-blue-600 border border-blue-600 rounded hover:bg-blue-100"
+              >
+                Previous
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentPage(i + 1)}
+                  className={`px-3 py-1 border rounded ${currentPage === i + 1 ? 'bg-blue-600 text-white' : 'bg-white text-blue-600 hover:bg-blue-100'}`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+              <button
+                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                className="px-4 py-2 bg-white text-blue-600 border border-blue-600 rounded hover:bg-blue-100"
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
 
-        {/* Modal Form */}
         <dialog id="product_modal" className="modal">
-          <div className="modal-box max-w-2xl">
+          <div className="modal-box max-w-2xl bg-white/90 backdrop-blur-xl">
             <h3 className="font-bold text-lg">{modalData?.id ? "Edit Produk" : "Tambah Produk"}</h3>
-            <form onSubmit={handleSubmit} className="grid gap-3 mt-4">
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
               {Object.keys(initialModal).map((key) => (
                 <input key={key}
                   type={["price","discount","rating","stock","length","width","height"].includes(key) ? "number" : "text"}
@@ -209,11 +227,11 @@ export default function ProductList() {
                   className="input input-bordered w-full" required
                 />
               ))}
-              <div className="modal-action">
-                <button type="submit" className="btn btn-primary">
+              <div className="col-span-full flex justify-end gap-2 mt-4">
+                <button type="submit" className="px-6 py-2 bg-white border border-blue-600 text-blue-600 rounded hover:bg-blue-100">
                   {modalData?.id ? "Update" : "Simpan"}
                 </button>
-                <button type="button" className="btn" onClick={() => document.getElementById("product_modal").close()}>
+                <button type="button" className="px-6 py-2 bg-white border border-gray-500 text-gray-600 rounded hover:bg-gray-100" onClick={() => document.getElementById("product_modal").close()}>
                   Batal
                 </button>
               </div>

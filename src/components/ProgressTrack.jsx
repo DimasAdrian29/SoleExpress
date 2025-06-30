@@ -1,32 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import { dataSepatuAPI } from "../services/dataSepatuAPI";
 
 export default function ProgressTrack() {
-  const tracks = [
-    {
-      icon: 'fab fa-react',
-      color: '#3c50e0',
-      label: 'React Material Dashboard',
-      width: '40%',
-    },
-    {
-      icon: 'fab fa-adobe',
-      color: '#f44336',
-      label: 'Argon Design System',
-      width: '75%',
-    },
-    {
-      icon: 'fab fa-spotify',
-      color: '#1abc9c',
-      label: 'VueJs Now UI Kit PRO',
-      width: '60%',
-    },
-    {
-      icon: 'fab fa-slack',
-      color: '#3c50e0',
-      label: 'Soft UI Dashboard',
-      width: '50%',
-    },
-  ];
+  const [tracks, setTracks] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const data = await dataSepatuAPI.getLatest(4);
+      const maxStok = Math.max(...data.map((item) => item.stock || 0), 1); // hindari div by 0
+      const colorList = ["#3c50e0", "#f44336", "#1abc9c", "#ff9800"];
+
+      const transformed = data.map((item, index) => ({
+        label: item.name,
+        icon: "fas fa-shoe-prints",
+        color: colorList[index % colorList.length],
+        width: `${Math.round((item.stock / maxStok) * 100)}%`,
+      }));
+
+      setTracks(transformed);
+    }
+
+    fetchData();
+  }, []);
+
   return (
     <section aria-label="Progress Track" className="bg-white rounded-xl p-6 select-none">
       <h3 className="font-semibold text-[13px] mb-4">Progress Track</h3>
@@ -34,7 +30,7 @@ export default function ProgressTrack() {
         {tracks.map(({ icon, color, label, width }, i) => (
           <li key={i}>
             <div className="flex items-center gap-2 mb-1">
-              <i className={`${icon}`} style={{ color, fontSize: '18px' }}></i>
+              <i className={icon} style={{ color, fontSize: "18px" }}></i>
               <span className="font-semibold">{label}</span>
             </div>
             <div className="w-full h-[3px] bg-[#e5e7eb] rounded-full">

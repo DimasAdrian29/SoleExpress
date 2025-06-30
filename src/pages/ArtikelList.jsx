@@ -3,7 +3,7 @@ import { newsAPI } from "../services/newsAPI";
 import AlertBox from "../components/AlertBox";
 import EmptyState from "../components/EmptyState";
 import LoadingSpinner from "../components/LoadingSpinner";
-import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { AiFillDelete, AiFillEdit, AiOutlineClose } from "react-icons/ai";
 import Header from "../components/Header";
 
 export default function ArtikelList() {
@@ -71,17 +71,19 @@ export default function ArtikelList() {
 
     try {
       if (editingId) {
-        await newsAPI.updateNews(editingId, dataForm);
+        const updatedItem = await newsAPI.updateNews(editingId, dataForm);
+        setArticles((prev) =>
+          prev.map((item) => (item.id === editingId ? updatedItem : item))
+        );
         setSuccess("Artikel berhasil diperbarui!");
       } else {
         const newItem = await newsAPI.createNews(dataForm);
-        setArticles((prev) => [newItem, ...prev]); // langsung tambah
+        setArticles((prev) => [newItem, ...prev]);
         setSuccess("Artikel berhasil ditambahkan!");
       }
 
       closeModal();
     } catch (err) {
-      console.error(err);
       setError("Terjadi kesalahan saat menyimpan artikel.");
     } finally {
       setLoading(false);
@@ -96,10 +98,9 @@ export default function ArtikelList() {
 
     try {
       await newsAPI.deleteNews(id);
-      setSuccess("Artikel berhasil dihapus!");
       setArticles((prev) => prev.filter((item) => item.id !== id));
+      setSuccess("Artikel berhasil dihapus!");
     } catch (err) {
-      console.error(err);
       setError("Gagal menghapus artikel");
     } finally {
       setLoading(false);
@@ -123,27 +124,34 @@ export default function ArtikelList() {
 
         <button
           onClick={() => openModal()}
-          className="mb-4 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl"
+          className="mb-4 px-6 py-3 bg-white text-blue-600 font-semibold rounded-xl shadow hover:bg-blue-100 transition"
         >
           Tambah Artikel
         </button>
 
-        {/* Modal Form */}
         {isModalOpen && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-white p-6 rounded-xl w-full max-w-lg shadow-xl">
-              <h3 className="text-lg font-semibold mb-4">
-                {editingId ? "Edit Artikel" : "Tambah Artikel Baru"}
+          <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50">
+            <div className="bg-white/80 backdrop-blur-xl p-6 rounded-xl w-full max-w-lg shadow-2xl relative">
+              <button
+                onClick={closeModal}
+                className="absolute top-4 right-4 text-gray-700 hover:text-gray-900"
+              >
+                <AiOutlineClose className="text-2xl" />
+              </button>
+
+              <h3 className="text-xl font-bold mb-4 text-gray-800">
+                {editingId ? "Edit Artikel" : "Tambah Artikel"}
               </h3>
+
               <form onSubmit={handleSubmit} className="space-y-4">
                 <input
                   type="text"
                   name="title"
                   value={dataForm.title}
                   onChange={handleChange}
-                  placeholder="Judul"
+                  placeholder="Judul Artikel"
                   required
-                  className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200"
+                  className="w-full p-3 rounded-xl bg-white border border-gray-300"
                 />
                 <textarea
                   name="content"
@@ -152,27 +160,27 @@ export default function ArtikelList() {
                   placeholder="Konten Artikel"
                   rows="6"
                   required
-                  className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200"
+                  className="w-full p-3 rounded-xl bg-white border border-gray-300"
                 />
                 <input
                   type="text"
                   name="image_url"
                   value={dataForm.image_url}
                   onChange={handleChange}
-                  placeholder="URL Gambar"
-                  className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200"
+                  placeholder="URL Gambar (opsional)"
+                  className="w-full p-3 rounded-xl bg-white border border-gray-300"
                 />
-                <div className="flex gap-3 justify-end">
+                <div className="flex justify-end gap-3 mt-2">
                   <button
                     type="submit"
-                    className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl"
+                    className="px-6 py-2 bg-white text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white rounded-xl font-semibold transition"
                   >
-                    {loading ? "Menyimpan..." : editingId ? "Simpan Perubahan" : "Tambah"}
+                    {editingId ? "Simpan" : "Tambah"}
                   </button>
                   <button
                     type="button"
                     onClick={closeModal}
-                    className="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-xl"
+                    className="px-6 py-2 bg-white text-gray-600 border border-gray-400 hover:bg-gray-400 hover:text-white rounded-xl font-semibold transition"
                   >
                     Batal
                   </button>

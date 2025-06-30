@@ -1,50 +1,56 @@
+
 // src/services/teamAPI.js
 import axios from 'axios';
 
-// API_URL ini sudah benar jika nama tabel Anda di Supabase adalah 'datateam'
-const API_URL = "https://cdriiahgnydchnvzcvyh.supabase.co/rest/v1/datateam"; 
-// PASTIKAN API KEY INI BENAR DAN AKTIF
-const API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkcmlpYWhnbnlkY2hudnpjdnloIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkyMTA4MjksImV4cCI6MjA2NDc4NjgyOX0.fF0kG_xmbZSwKp7yVlmUNSDUmEk23sPIYI1IS_OGwxU"; 
+// Ganti dengan URL Supabase dan API KEY milikmu
+const API_URL = "https://cdriiahgnydchnvzcvyh.supabase.co/rest/v1/datateam";
+const API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkcmlpYWhnbnlkY2hudnpjdnloIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkyMTA4MjksImV4cCI6MjA2NDc4NjgyOX0.fF0kG_xmbZSwKp7yVlmUNSDUmEk23sPIYI1IS_OGwxU";
 
 const headers = {
-    apikey: API_KEY,
-    Authorization: `Bearer ${API_KEY}`,
-    "Content-Type": "application/json",
-    Prefer: "return=representation" 
+  apikey: API_KEY,
+  Authorization: `Bearer ${API_KEY}`,
+  "Content-Type": "application/json",
+  Prefer: "return=representation"
 };
 
-export const teamAPI = { 
-    async fetchTeamMembers() {
-        try {
-            // Hapus bagian "?order=created_at.desc" karena kolomnya tidak ada
-            const response = await axios.get(
-                API_URL, // <--- Perbaikan di sini!
-                { headers }
-            );
-            return response.data;
-        } catch (error) {
-            console.error("Error fetching team members from Supabase:", error);
-            throw error;
-        }
-    },
+export const teamAPI = {
+  baseURL: API_URL,
+  headers,
 
-    async fetchTeamMemberById(id) {
-        try {
-            const response = await axios.get(
-                `${API_URL}?id=eq.${id}&limit=1`, 
-                { headers }
-            );
-            
-            if (response.data.length === 0) {
-                const notFoundError = new Error(`Team member with ID ${id} not found.`);
-                notFoundError.name = "NotFoundError"; // Menambahkan nama untuk penanganan error yang lebih baik
-                throw notFoundError;
-            }
+  // Pagination: default limit 5
+  async fetchTeamMembers({ page = 1, limit = 5 }) {
+    const from = (page - 1) * limit;
+    const to = from + limit - 1;
 
-            return response.data[0];
-        } catch (error) {
-            console.error(`Error fetching team member with ID ${id} from Supabase:`, error);
-            throw error;
-        }
-    }
+    const res = await axios.get(`${API_URL}?order=id.desc&offset=${from}&limit=${limit}`, {
+      headers,
+    });
+    return res.data;
+  },
+
+  async fetchTeamMemberById(id) {
+    const res = await axios.get(`${API_URL}?id=eq.${id}&limit=1`, { headers });
+    if (res.data.length === 0) throw new Error("Data tidak ditemukan");
+    return res.data[0];
+  },
+
+  async createTeamMember(data) {
+    const res = await axios.post(API_URL, data, { headers });
+    return res.data[0];
+  },
+
+  async updateTeamMember(id, data) {
+    const res = await axios.patch(`${API_URL}?id=eq.${id}`, data, { headers });
+    return res.data[0];
+  },
+
+  async deleteTeamMember(id) {
+    await axios.delete(`${API_URL}?id=eq.${id}`, { headers });
+  },
+
+  // Untuk hitung total
+  async getTotalMembers() {
+    const res = await axios.get(`${API_URL}?select=id`, { headers });
+    return res.data.length;
+  }
 };

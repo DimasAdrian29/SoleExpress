@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import { transaksiAPI } from "../services/transaksiAPI";
+import dayjs from "dayjs";
 
 export default function ToDoList() {
-  const todos = [
-    { label: 'Call with Dave', time: '09:30 AM', checked: true },
-    { label: 'Brunch meeting', time: '11:00 AM', checked: false },
-    { label: 'Argon Dashboard Lunch', time: '02:00 PM', checked: false },
-    { label: 'Winter Hackaton', time: '11:30 AM', checked: true },
-  ];
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    async function fetch() {
+      const data = await transaksiAPI.getLatest(5);
+      const formatted = data.map((item) => ({
+        label: item.ekspedisi || "Pengiriman",
+        time: dayjs(item.created_at).format("HH:mm"),
+        checked: false,
+      }));
+      setTodos(formatted);
+    }
+    fetch();
+  }, []);
+
   return (
     <section aria-label="To Do List" className="bg-white rounded-xl p-6 select-none">
       <h3 className="font-semibold text-[13px] mb-4">To Do List</h3>

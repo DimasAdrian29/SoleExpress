@@ -13,13 +13,7 @@ export default function FAQList() {
   const [faqs, setFaqs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const [dataForm, setDataForm] = useState({
-    name: "",
-    question: "",
-    answer: ""
-  });
-
+  const [dataForm, setDataForm] = useState({ question: "", answer: "" });
   const [editingId, setEditingId] = useState(null);
 
   useEffect(() => {
@@ -46,10 +40,7 @@ export default function FAQList() {
 
     try {
       setLoading(true);
-      await fetch(`${faqAPI.baseURL}/${id}`, {
-        method: "DELETE",
-        headers: faqAPI.headers,
-      });
+      await faqAPI.deleteFAQ(id);
       setSuccess("FAQ berhasil dihapus!");
       loadFAQs();
     } catch (err) {
@@ -67,21 +58,17 @@ export default function FAQList() {
   const openModal = (faq = null) => {
     if (faq) {
       setEditingId(faq.id);
-      setDataForm({
-        name: faq.name,
-        question: faq.question,
-        answer: faq.answer || ""
-      });
+      setDataForm({ question: faq.question, answer: faq.answer || "" });
     } else {
       setEditingId(null);
-      setDataForm({ name: "", question: "", answer: "" });
+      setDataForm({ question: "", answer: "" });
     }
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setEditingId(null);
-    setDataForm({ name: "", question: "", answer: "" });
+    setDataForm({ question: "", answer: "" });
     setIsModalOpen(false);
   };
 
@@ -93,14 +80,10 @@ export default function FAQList() {
       setSuccess("");
 
       if (editingId) {
-        await fetch(`${faqAPI.baseURL}?id=eq.${editingId}`, {
-          method: "PATCH",
-          headers: faqAPI.headers,
-          body: JSON.stringify(dataForm),
-        });
+        await faqAPI.updateFAQ(editingId, dataForm);
         setSuccess("FAQ berhasil diperbarui!");
       } else {
-        await faqAPI.submitVisitorQuestion(dataForm);
+        await faqAPI.createFAQ(dataForm);
         setSuccess("FAQ berhasil ditambahkan!");
       }
 
@@ -130,27 +113,26 @@ export default function FAQList() {
 
         <button
           onClick={() => openModal()}
-          className="mb-4 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl"
+          className="mb-4 px-6 py-3 bg-white text-blue-600 font-semibold rounded-xl shadow hover:bg-blue-100 transition"
         >
           Tambah FAQ Baru
         </button>
 
         {isModalOpen && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-white p-6 rounded-xl w-full max-w-md shadow-xl">
-              <h3 className="text-lg font-semibold mb-4">
+          <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50">
+            <div className="bg-white/80 backdrop-blur-xl p-6 rounded-xl w-full max-w-lg shadow-2xl relative">
+              <button
+                onClick={closeModal}
+                className="absolute top-4 right-4 text-gray-700 hover:text-gray-900"
+              >
+                <AiOutlineClose className="text-2xl" />
+              </button>
+
+              <h3 className="text-xl font-bold mb-4 text-gray-800">
                 {editingId ? "Edit FAQ" : "Tambah FAQ Baru"}
               </h3>
+
               <form onSubmit={handleSubmit} className="space-y-4">
-                <input
-                  type="text"
-                  name="name"
-                  value={dataForm.name}
-                  onChange={handleChange}
-                  placeholder="Nama"
-                  required
-                  className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200"
-                />
                 <input
                   type="text"
                   name="question"
@@ -158,7 +140,7 @@ export default function FAQList() {
                   onChange={handleChange}
                   placeholder="Pertanyaan"
                   required
-                  className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200"
+                  className="w-full p-3 rounded-xl bg-white border border-gray-300"
                 />
                 <textarea
                   name="answer"
@@ -166,19 +148,19 @@ export default function FAQList() {
                   onChange={handleChange}
                   placeholder="Jawaban"
                   rows="4"
-                  className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200"
+                  className="w-full p-3 rounded-xl bg-white border border-gray-300"
                 />
-                <div className="flex gap-3 justify-end">
+                <div className="flex justify-end gap-3 mt-2">
                   <button
                     type="submit"
-                    className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl"
+                    className="px-6 py-2 bg-white text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white rounded-xl font-semibold transition"
                   >
                     {loading ? "Menyimpan..." : editingId ? "Simpan Perubahan" : "Tambah"}
                   </button>
                   <button
                     type="button"
                     onClick={closeModal}
-                    className="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-xl"
+                    className="px-6 py-2 bg-white text-gray-600 border border-gray-400 hover:bg-gray-400 hover:text-white rounded-xl font-semibold transition"
                   >
                     Batal
                   </button>
@@ -208,7 +190,6 @@ export default function FAQList() {
               <thead className="bg-blue-100">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">#</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Nama</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Pertanyaan</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Jawaban</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Aksi</th>
@@ -218,7 +199,6 @@ export default function FAQList() {
                 {filteredFAQs.map((faq, index) => (
                   <tr key={faq.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 text-sm text-gray-700">{index + 1}</td>
-                    <td className="px-6 py-4 text-sm text-gray-700">{faq.name}</td>
                     <td className="px-6 py-4 text-sm text-gray-800">{faq.question}</td>
                     <td className="px-6 py-4 text-sm text-gray-600">{faq.answer || "-"}</td>
                     <td className="px-6 py-4">

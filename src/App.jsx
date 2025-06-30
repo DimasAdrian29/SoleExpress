@@ -17,6 +17,7 @@ import CareerList from "./pages/CareerList";
 import TeamList from "./pages/TeamList";
 import TentangSolexpressEditor from "./pages/TentangSolexpressEditor";
 import TestimoniList from "./pages/TestimoniList";
+import TransaksiList from "./pages/TransaksiList";
 
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const ErrorPage = React.lazy(() => import("./pages/ErrorPage"));
@@ -43,17 +44,18 @@ function App() {
           <Route path="/Karyawanlist" element={<TeamManagement />} />
           <Route path="/galerilist" element={<GaleriManagement />} />
           <Route path="/artikel" element={<ArtikelList />} />
-        <Route path="/produklist/:id" element={<ProductDetail />} />
-         <Route path="/vendorlist/:id" element={<VendorDetail />} />
+          <Route path="/produklist/:id" element={<ProductDetail />} />
+          <Route path="/vendorlist/:id" element={<VendorDetail />} />
           <Route path="/Karyawanlist/:id" element={<DetailKaryawan />} />
           <Route path="/galerilist/:id" element={<GaleriDetail />} />
           <Route path="/user" element={<UserList />} />
           <Route path="/faq" element={<FAQList />} />
           <Route path="/career" element={<CareerList />} />
           <Route path="/pesansaran" element={<PesanSaranList />} />
-           <Route path="/team" element={<TeamList />} />
-            <Route path="/about" element={<TentangSolexpressEditor />} />
-             <Route path="/testimoni" element={<TestimoniList />} />
+          <Route path="/team" element={<TeamList />} />
+          <Route path="/about" element={<TentangSolexpressEditor />} />
+          <Route path="/testimoni" element={<TestimoniList />} />
+          <Route path="/transaksi" element={<TransaksiList />} />
         </Route>
 
         <Route element={<AuthLayout />}>

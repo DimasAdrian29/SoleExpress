@@ -1,3 +1,4 @@
+import { AiFillDollarCircle } from "react-icons/ai"; 
 import { MdContacts } from "react-icons/md"; 
 import { BiCommentDetail } from "react-icons/bi"; 
 import { AiFillInfoCircle } from "react-icons/ai"; 
@@ -36,6 +37,13 @@ export default function MenuList() {
           <NavLink to="/produklist" className={menuClass}>
             <AiFillShopping className="text-xl" />
             <span>Produk</span>
+          </NavLink>
+        </li>
+         <li>
+          <NavLink to="/transaksi" className={menuClass}>
+            <AiFillDollarCircle className="text-xl" />
+            <span>Transaksi</span>
+            
           </NavLink>
         </li>
         <li>
@@ -83,12 +91,6 @@ export default function MenuList() {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/karyawanlist" className={menuClass}>
-            <FaUserFriends className="text-xl" />
-            <span>Karyawan</span>
-          </NavLink>
-        </li>
-        <li>
           <NavLink to="/galerilist" className={menuClass}>
             <AiFillPicture className="text-xl" />
             <span>Galeri</span>
@@ -100,26 +102,9 @@ export default function MenuList() {
             <span>Pengguna</span>
           </NavLink>
         </li>
-         <li>
-          <NavLink to="/vendorlist" className={menuClass}>
-            <BiUserCircle className="text-xl" />
-            <span>Vendor</span>
-          </NavLink>
-        </li>
+         
         
-        <li>
-          <NavLink to="/ErrorPage400" className={menuClass}>
-
-            <BiErrorAlt className="text-xl" />
-            <span>ErorPage400</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/ErrorPage403" className={menuClass}>
-            <BiErrorAlt className="text-xl" />
-            <span>ErorPage403</span>
-          </NavLink>
-        </li>
+  
       </ul>
     </div>
   );

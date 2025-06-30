@@ -1,5 +1,7 @@
+
 // services/faqAPI.js
 import axios from 'axios';
+
 
 // PASTIKAN URL INI BENAR (Project URL + /rest/v1/FAQ)
 const API_URL = "https://cdriiahgnydchnvzcvyh.supabase.co/rest/v1/FAQ"; 
@@ -14,15 +16,10 @@ const headers = {
 };
 
 export const faqAPI = {
-    // FUNGSI INI HARUS MENGAMBIL SEMUA DATA DARI TABEL FAQ, TANPA FILTER APA PUN PADA KOLOM 'answer'
+    // READ - Ambil semua FAQ
     async fetchFAQs() {
         try {
-            // Parameter '?order=created_at.desc' hanya untuk pengurutan, BUKAN filter.
-            // Pastikan TIDAK ADA filter seperti '.not('answer', 'is', null)' di sini.
-            const response = await axios.get(
-                `${API_URL}?order=created_at.desc`, 
-                { headers }
-            );
+            const response = await axios.get(`${API_URL}?order=created_at.desc`, { headers });
             return response.data;
         } catch (error) {
             console.error("Error fetching all FAQs from Supabase:", error);
@@ -30,22 +27,35 @@ export const faqAPI = {
         }
     },
 
-    async submitVisitorQuestion(formData) { 
-        const { name, question } = formData;
-        
+    // CREATE - Tambah pertanyaan (misal dari pengunjung)
+    async createFAQ(data) {
         try {
-            const response = await axios.post(
-                API_URL, 
-                { 
-                    question: question,
-                    answer: null,       // Ini HARUS null agar bisa ditandai 'Belum Dijawab'
-                    name: name          
-                }, 
-                { headers }
-            );
+            const response = await axios.post(API_URL, data, { headers });
             return response.data;
         } catch (error) {
-            console.error("Error submitting visitor question to Supabase:", error);
+            console.error("Error creating FAQ:", error);
+            throw error;
+        }
+    },
+
+    // UPDATE - Edit jawaban atau pertanyaan
+    async updateFAQ(id, updatedData) {
+        try {
+            const response = await axios.patch(`${API_URL}?id=eq.${id}`, updatedData, { headers });
+            return response.data;
+        } catch (error) {
+            console.error(`Error updating FAQ with id ${id}:`, error);
+            throw error;
+        }
+    },
+
+    // DELETE - Hapus pertanyaan
+    async deleteFAQ(id) {
+        try {
+            const response = await axios.delete(`${API_URL}?id=eq.${id}`, { headers });
+            return response.data;
+        } catch (error) {
+            console.error(`Error deleting FAQ with id ${id}:`, error);
             throw error;
         }
     }
