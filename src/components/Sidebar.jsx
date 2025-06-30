@@ -8,8 +8,8 @@ export default function Sidebar() {
       {/* Logo */}
       <div className="flex items-center gap-2 mb-8">
       
-       <GiSonicShoes  className="text-xl"/>
-        <span className="font-bold text-[13px] text-white select-none">
+       <GiSonicShoes   className="text-4xl mr-3 text-white"/>
+        <span className="font-bold text-[15px] text-white select-none">
           SoleExpress Admin
         </span>
       </div>
