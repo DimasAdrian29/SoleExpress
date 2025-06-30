@@ -29,7 +29,7 @@ export default function Header({ path = "/ Pages / Default", title = "Default" }
         </div>
         <button
           aria-label="Logout"
-          onClick={() => window.location.href = "https://solexpress.vercel.app/"}
+          onClick={() => window.location.href = "https://sole-xpress.vercel.app/"}
           className="flex items-center gap-1 text-white text-[13px] font-semibold"
           type="button"
         >
