@@ -81,7 +81,6 @@ export default function ArtikelList() {
         setArticles((prev) => [newItem, ...prev]);
         setSuccess("Artikel berhasil ditambahkan!");
       }
-
       closeModal();
     } catch (err) {
       setError("Terjadi kesalahan saat menyimpan artikel.");
@@ -117,7 +116,9 @@ export default function ArtikelList() {
     <div className="flex min-h-screen bg-[#5f73f2] rounded-2xl m-2">
       <main className="flex-1 flex flex-col p-4 md:p-6 lg:p-8">
         <Header path="/ Pages / Artikel" title="Artikel" />
-        <h1 className="text-3xl font-bold text-white mb-8">Admin - Manajemen Artikel</h1>
+        <h1 className="text-3xl font-bold text-white mb-8">
+          Admin - Manajemen Artikel
+        </h1>
 
         {error && <AlertBox type="error">{error}</AlertBox>}
         {success && <AlertBox type="success">{success}</AlertBox>}
@@ -202,7 +203,9 @@ export default function ArtikelList() {
 
         <div className="bg-white rounded-xl shadow-lg overflow-auto">
           {loading && <LoadingSpinner text="Memuat artikel..." />}
-          {!loading && error && <EmptyState text="Terjadi kesalahan saat memuat artikel" />}
+          {!loading && error && (
+            <EmptyState text="Terjadi kesalahan saat memuat artikel" />
+          )}
           {!loading && !error && filteredArticles.length === 0 && (
             <EmptyState text="Tidak ada artikel ditemukan" />
           )}
@@ -212,6 +215,7 @@ export default function ArtikelList() {
                 <tr>
                   <th className="px-4 py-2 text-left font-semibold">#</th>
                   <th className="px-4 py-2 text-left font-semibold">Judul</th>
+                  <th className="px-4 py-2 text-left font-semibold">Konten</th>
                   <th className="px-4 py-2 text-left font-semibold">Gambar</th>
                   <th className="px-4 py-2 text-left font-semibold">Tanggal</th>
                   <th className="px-4 py-2 text-left font-semibold">Aksi</th>
@@ -221,10 +225,17 @@ export default function ArtikelList() {
                 {filteredArticles.map((item, index) => (
                   <tr key={item.id}>
                     <td className="px-4 py-3">{index + 1}</td>
-                    <td className="px-4 py-3">{item.title}</td>
+                    <td className="px-4 py-3 font-medium">{item.title}</td>
+                    <td className="px-4 py-3 max-w-xs truncate text-gray-700">
+                      {item.content}
+                    </td>
                     <td className="px-4 py-3">
                       {item.image_url ? (
-                        <img src={item.image_url} alt={item.title} className="h-12 rounded" />
+                        <img
+                          src={item.image_url}
+                          alt={item.title}
+                          className="h-12 rounded"
+                        />
                       ) : (
                         "-"
                       )}
